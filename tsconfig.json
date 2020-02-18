@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "strict": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react"
+  },
+  "include": ["./src"]
+}
