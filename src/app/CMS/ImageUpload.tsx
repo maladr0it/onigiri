@@ -20,10 +20,7 @@ interface Props {
 }
 
 export const ImageUpload: React.FC<Props> = ({ name, imageUrl }) => {
-  const [field, _, helpers] = useField({
-    name,
-    type: "file",
-  });
+  const [field, _, helpers] = useField({ name });
   const [thumbnail, setThumbnail] = useState<string | null>(null);
 
   useEffect(() => {
@@ -54,6 +51,7 @@ export const ImageUpload: React.FC<Props> = ({ name, imageUrl }) => {
       <PreviewContainer>{renderPreview()}</PreviewContainer>
       <input
         type="file"
+        accept="image/*"
         onChange={(e) => {
           const file = e.currentTarget.files?.[0];
           if (file) {

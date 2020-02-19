@@ -1,11 +1,12 @@
 import React from "react";
-import { useFormik, FormikProvider } from "formik";
+import { useFormik, FormikProvider, FormikErrors } from "formik";
 
 import { db, storage } from "../services";
+import { TextInput } from "./TextInput";
 import { ImageUpload } from "./ImageUpload";
 
 interface FormValues {
-  name?: string;
+  name: string;
   imageUrl?: string;
   imageUpload: File | null;
 }
@@ -17,7 +18,18 @@ export const EditItemForm = () => {
       imageUrl: "",
       imageUpload: null,
     },
+
+    validate: (values) => {
+      const errors: FormikErrors<typeof values> = {};
+      if (!values.name) {
+        errors.name = "Please give this item a name.";
+      }
+      return errors;
+    },
+
     onSubmit: async (values) => {
+      console.log("submitting...");
+
       const { imageUpload, imageUrl, ...rest } = values;
 
       let url = imageUrl;
@@ -39,14 +51,7 @@ export const EditItemForm = () => {
     <FormikProvider value={formik}>
       <form onSubmit={handleSubmit}>
         <h1>Form</h1>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          autoComplete="off"
-          {...formik.getFieldProps("name")}
-        />
+        <TextInput label="Name" name="name" />
         <ImageUpload name="imageUpload" imageUrl={formik.values.imageUrl} />
         <button type="submit">Submit</button>
       </form>

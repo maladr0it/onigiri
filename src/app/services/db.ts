@@ -3,15 +3,20 @@ import "firebase/firestore";
 
 import { dateToTimestamp } from "./utils";
 
+export type WithId<T extends {}> = {
+  id: string;
+  data: T;
+};
+
 export interface MenuDoc {
   date: number;
   items: string[];
 }
 
 export interface FoodItemDoc {
-  name?: string;
+  name: string;
   imageUrl?: string;
-  ratig?: number;
+  rating?: number;
 }
 
 const db = firebase.firestore();
@@ -31,6 +36,18 @@ export const listenForMenu = (
     });
 };
 
+export const listenForFoodList = (
+  onChange: (docs: WithId<FoodItemDoc>[]) => void,
+) => {
+  return db.collection("foodItems").onSnapshot((querySnapshot) => {
+    const docs = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      data: doc.data(),
+    })) as WithId<FoodItemDoc>[];
+    onChange(docs);
+  });
+};
+
 export const listenForFoodItem = (
   id: string,
   onChange: (doc: FoodItemDoc) => void,
@@ -45,7 +62,5 @@ export const listenForFoodItem = (
 };
 
 export const addFoodItem = async (data: FoodItemDoc) => {
-  console.log("adding", data);
-
   return db.collection("foodItems").add(data);
 };

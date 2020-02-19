@@ -11,7 +11,6 @@ export const MenuItem: React.FC<Props> = ({ id }) => {
 
   useEffect(() => {
     const unsubscribe = db.listenForFoodItem(id, setData);
-
     return unsubscribe;
   }, [id]);
 
@@ -20,7 +19,7 @@ export const MenuItem: React.FC<Props> = ({ id }) => {
       {data && (
         <>
           <p>{data.name}</p>
-          <img src={data.image} />
+          <img src={data.imageUrl} />
         </>
       )}
     </li>
