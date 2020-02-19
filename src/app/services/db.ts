@@ -1,25 +1,23 @@
-import firebase from "firebase/app";
+import firebase from "./firebase";
 import "firebase/firestore";
 
-import config from "./config";
 import { dateToTimestamp } from "./utils";
 
-firebase.initializeApp(config);
-
-interface MenuDoc {
+export interface MenuDoc {
   date: number;
   items: string[];
 }
 
-interface FoodItemDoc {
+export interface FoodItemDoc {
   name: string;
+  image: string;
   rating: number;
 }
 
 const db = firebase.firestore();
 
 export const listenForMenu = (
-  date: Date,
+  date: number,
   onChange: (docs: MenuDoc[]) => void,
 ) => {
   const timestamp = dateToTimestamp(date);
@@ -33,18 +31,15 @@ export const listenForMenu = (
     });
 };
 
-// Get a food item by ID
 export const listenForFoodItem = (
   id: string,
   onChange: (doc: FoodItemDoc) => void,
 ) => {
   return db
-    .collection("foodItem")
+    .collection("foodItems")
     .doc(id)
     .onSnapshot((docSnapshot) => {
       const doc = docSnapshot.data() as FoodItemDoc;
       onChange(doc);
     });
 };
-
-// export const getMenuData

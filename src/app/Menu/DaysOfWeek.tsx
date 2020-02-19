@@ -11,6 +11,10 @@ const DAYS = [
   "SATURDAY",
 ];
 
+const DayList = styled.ul`
+  display: flex;
+`;
+
 const DayButton = styled.button<{ selected: boolean }>`
   font-weight: ${(props) => (props.selected ? "bold" : "normal")};
 `;
@@ -29,9 +33,9 @@ export const DaysOfWeek: React.FC<Props> = ({
   return (
     <>
       <h3>Days</h3>
-      <ul>
+      <DayList>
         {days.map((day, i) => (
-          <li className="" key={i}>
+          <li key={i}>
             <DayButton
               selected={day === selectedDay}
               onClick={() => onDayClick(day)}
@@ -40,7 +44,7 @@ export const DaysOfWeek: React.FC<Props> = ({
             </DayButton>
           </li>
         ))}
-      </ul>
+      </DayList>
     </>
   );
 };
