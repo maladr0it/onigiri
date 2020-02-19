@@ -5,6 +5,7 @@ const storage = firebase.storage();
 const storageRef = storage.ref();
 const menuItemsRef = storageRef.child("menuItems");
 
-console.log(menuItemsRef);
-
-export const test = 5;
+export const uploadMenuItem = async (file: File) => {
+  const snapshot = await menuItemsRef.put(file);
+  return snapshot.ref.getDownloadURL();
+};

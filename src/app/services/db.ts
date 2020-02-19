@@ -9,9 +9,9 @@ export interface MenuDoc {
 }
 
 export interface FoodItemDoc {
-  name: string;
-  image: string;
-  rating: number;
+  name?: string;
+  imageUrl?: string;
+  ratig?: number;
 }
 
 const db = firebase.firestore();
@@ -42,4 +42,10 @@ export const listenForFoodItem = (
       const doc = docSnapshot.data() as FoodItemDoc;
       onChange(doc);
     });
+};
+
+export const addFoodItem = async (data: FoodItemDoc) => {
+  console.log("adding", data);
+
+  return db.collection("foodItems").add(data);
 };

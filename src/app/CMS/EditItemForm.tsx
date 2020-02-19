@@ -1,17 +1,32 @@
 import React from "react";
 import { useFormik, FormikProvider } from "formik";
 
-import { storage } from "../services";
+import { db, storage } from "../services";
 import { ImageUpload } from "./ImageUpload";
 
+interface FormValues {
+  name?: string;
+  imageUrl?: string;
+  imageUpload: File | null;
+}
+
 export const EditItemForm = () => {
-  const formik = useFormik({
+  const formik = useFormik<FormValues>({
     initialValues: {
       name: "",
-      image: null,
+      imageUrl: "",
+      imageUpload: null,
     },
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const { imageUpload, imageUrl, ...rest } = values;
+
+      let url = imageUrl;
+      if (imageUpload) {
+        url = await storage.uploadMenuItem(imageUpload);
+        console.log(url);
+      }
+
+      db.addFoodItem({ imageUrl: url, ...rest });
     },
   });
 
@@ -32,7 +47,7 @@ export const EditItemForm = () => {
           autoComplete="off"
           {...formik.getFieldProps("name")}
         />
-        <ImageUpload name="image" />
+        <ImageUpload name="imageUpload" imageUrl={formik.values.imageUrl} />
         <button type="submit">Submit</button>
       </form>
     </FormikProvider>
