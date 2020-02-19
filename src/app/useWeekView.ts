@@ -3,14 +3,16 @@ import { useState, useMemo, useEffect } from "react";
 import { db } from "./services";
 import { getWeekdays } from "./utils";
 
+type MenuDoc = db.WithId<db.MenuDoc>;
+
 export const useWeekView = () => {
   const days = useMemo(() => getWeekdays(new Date().valueOf()), []);
   const [selectedDay, setSelectedDay] = useState(days[0]);
-  const [menuItems, setMenuItems] = useState<string[]>();
+  const [menu, setMenu] = useState<MenuDoc>();
 
   useEffect(() => {
-    const unsubsribe = db.listenForMenu(selectedDay, ([menuData]) => {
-      setMenuItems(menuData?.items ?? null);
+    const unsubsribe = db.listenForMenu(selectedDay, ([menuDoc]) => {
+      setMenu(menuDoc);
     });
 
     return unsubsribe;
@@ -20,6 +22,6 @@ export const useWeekView = () => {
     days,
     selectedDay,
     setSelectedDay,
-    menuItems,
+    menu,
   };
 };

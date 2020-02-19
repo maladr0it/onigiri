@@ -23,7 +23,7 @@ const db = firebase.firestore();
 
 export const listenForMenu = (
   date: number,
-  onChange: (docs: MenuDoc[]) => void,
+  onChange: (docs: WithId<MenuDoc>[]) => void,
 ) => {
   const timestamp = dateToTimestamp(date);
 
@@ -31,7 +31,10 @@ export const listenForMenu = (
     .collection("menus")
     .where("date", "==", timestamp)
     .onSnapshot((querySnapshot) => {
-      const docs = querySnapshot.docs.map((doc) => doc.data()) as MenuDoc[];
+      const docs = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        data: doc.data(),
+      })) as WithId<MenuDoc>[];
       onChange(docs);
     });
 };

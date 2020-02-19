@@ -29,4 +29,5 @@ async function makeTemplate(inputPath, templateData) {
   const html = await makeTemplate(srcDir + "/popup.ejs", templateData);
   fs.writeFileSync(buildDir + "/popup.html", html);
   fs.copyFileSync(srcDir + "/manifest.json", buildDir + "/manifest.json");
+  fs.copyFileSync(srcDir + "/bg.html", buildDir + "/bg.html");
 })();

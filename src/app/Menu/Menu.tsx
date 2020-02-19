@@ -5,7 +5,7 @@ import { WeekViewer } from "../common/WeekViewer";
 import { MenuItem } from "./MenuItem";
 
 export const Menu = () => {
-  const { days, selectedDay, setSelectedDay, menuItems } = useWeekView();
+  const { days, selectedDay, setSelectedDay, menu } = useWeekView();
 
   return (
     <>
@@ -15,9 +15,9 @@ export const Menu = () => {
         selectedDay={selectedDay}
         onDayClick={setSelectedDay}
       />
-      {menuItems && (
+      {menu && (
         <ul>
-          {menuItems.map((id) => (
+          {menu.data.items.map((id) => (
             <MenuItem key={id} id={id} />
           ))}
         </ul>
