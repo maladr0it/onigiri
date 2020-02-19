@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 
 import "regenerator-runtime/runtime";
 
+import "./reset.css";
 import { App } from "./App";
 
-import "./reset.css";
 // import { Menu } from "./Menu";
 
 ReactDOM.render(<App />, document.getElementById("root"));

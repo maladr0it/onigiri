@@ -1,7 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
+import styled from "styled-components";
 
 import { useWeekView } from "../../useWeekView";
 import { WeekViewer } from "../../common/WeekViewer";
+import { MenuItem } from "../../Menu/MenuItem";
+
+const ItemRow = styled.li`
+  display: flex;
+  align-items: center;
+`;
 
 export const MenuEditor = () => {
   const { days, selectedDay, setSelectedDay, menuItems } = useWeekView();
@@ -14,8 +21,15 @@ export const MenuEditor = () => {
         selectedDay={selectedDay}
         onDayClick={setSelectedDay}
       />
-
-      {menuItems?.length || 0}
+      <ul>
+        {menuItems &&
+          menuItems.map((id) => (
+            <ItemRow key={id}>
+              <MenuItem key={id} id={id} />
+              <button onClick={() => {}}>DELETE</button>
+            </ItemRow>
+          ))}
+      </ul>
     </>
   );
 };

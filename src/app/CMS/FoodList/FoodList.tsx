@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { db } from "../services";
-import { FoodItem } from "./FoodItem";
+import { db } from "../../services";
+import { FoodItem } from "../../common/FoodItem";
 
 type FoodDoc = db.WithId<db.FoodItemDoc>;
 
@@ -18,7 +18,7 @@ export const FoodList = () => {
   return (
     <ul>
       {items?.map((item) => (
-        <FoodItem key={item.id} {...item.data} />
+        <FoodItem key={item.id} {...item} />
       ))}
     </ul>
   );

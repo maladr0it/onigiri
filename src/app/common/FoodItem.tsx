@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { db } from "../services";
 
-const Item = styled.li`
+const Item = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -25,14 +25,19 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-interface Props extends db.FoodItemDoc {}
+interface Props {
+  id: string;
+  data?: db.FoodItemDoc;
+}
 
-export const FoodItem: React.FC<Props> = ({ name, imageUrl, rating }) => {
+export const FoodItem: React.FC<Props> = ({ data }) => {
   return (
     <Item>
-      <ImageContainer>{imageUrl && <Image src={imageUrl} />}</ImageContainer>
-      <p>{name}</p>
-      <p>{rating}</p>
+      <ImageContainer>
+        {data?.imageUrl && <Image src={data?.imageUrl} />}
+      </ImageContainer>
+      <div>{data?.name}</div>
+      <div>{data?.rating}</div>
     </Item>
   );
 };

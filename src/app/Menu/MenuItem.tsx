@@ -1,27 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import styled from "styled-components";
 
-import { db } from "../services";
+import { useFoodData } from "../useFoodData";
+import { FoodItem } from "../common/FoodItem";
 
 interface Props {
   id: string;
 }
 
 export const MenuItem: React.FC<Props> = ({ id }) => {
-  const [data, setData] = useState<db.FoodItemDoc>();
-
-  useEffect(() => {
-    const unsubscribe = db.listenForFoodItem(id, setData);
-    return unsubscribe;
-  }, [id]);
-
+  const { data } = useFoodData(id);
   return (
     <li>
-      {data && (
-        <>
-          <p>{data.name}</p>
-          <img src={data.imageUrl} />
-        </>
-      )}
+      <FoodItem id={id} data={data} />
     </li>
   );
 };
