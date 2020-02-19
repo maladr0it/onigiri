@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { getWeekdays } from "../utils";
+
 const DAYS = [
   "SUNDAY",
   "MONDAY",
@@ -25,7 +27,7 @@ interface Props {
   onDayClick: (day: number) => void;
 }
 
-export const DaysOfWeek: React.FC<Props> = ({
+export const WeekViewer: React.FC<Props> = ({
   days,
   selectedDay,
   onDayClick,

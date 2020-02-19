@@ -35,7 +35,6 @@ export const EditItemForm = () => {
       let url = imageUrl;
       if (imageUpload) {
         url = await storage.uploadMenuItem(imageUpload);
-        console.log(url);
       }
 
       db.addFoodItem({ imageUrl: url, ...rest });
