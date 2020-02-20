@@ -18,18 +18,24 @@ const RequiredText = styled.div`
   color: #ed262a;
 `;
 
+const Input = styled.input<{ hasError: boolean }>`
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  border: 2px solid ${(props) => (props.hasError ? "#ed262a" : "#c4c4c4")};
+  border-radius: 2px;
+  padding: 0.5rem;
+
+  &:placeholder {
+    color: #c4c4c4;
+  }
+`;
+
 interface Props extends React.HTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
   required?: boolean;
 }
-
-const Input = styled.input<{ hasError: boolean }>`
-  display: block;
-  width: 100%;
-  font-size: 1rem;
-  border: 2px solid ${(props) => (props.hasError ? "red" : "blue")};
-`;
 
 export const TextInput: React.FC<Props> = ({
   label,

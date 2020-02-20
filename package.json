@@ -6,7 +6,7 @@
   "scripts": {
     "develop": "webpack-dev-server --host 0.0.0.0",
     "build": "webpack --mode production",
-    "build:extension-local": "node build-extension http://localhost:8080",
+    "build:extension-local": "node build-extension http://localhost:8080/public",
     "build:extension-public": "node build-extension https://www.google.com"
   },
   "keywords": [],

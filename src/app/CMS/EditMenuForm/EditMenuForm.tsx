@@ -6,7 +6,6 @@ import { useFormik, FormikProvider } from "formik";
 import { db } from "../../services";
 import { useMenuData } from "../../useMenuData";
 import { PrimaryButton } from "../../common/PrimaryButton";
-import { SecondaryButton } from "../../common/SecondaryButton";
 import { MenuPreview } from "./MenuPreview";
 import { FoodList } from "./FoodList";
 
@@ -116,9 +115,9 @@ export const EditMenuForm: React.FC<Props> = () => {
               <PrimaryButton type="submit">
                 {payload ? "Update menu" : "Create Menu"}
               </PrimaryButton>
-              <SecondaryButton type="button" onClick={exit}>
+              <button type="button" onClick={exit}>
                 Cancel
-              </SecondaryButton>
+              </button>
             </Controls>
           </Footer>
         </Form>

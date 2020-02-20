@@ -67,9 +67,9 @@ export const EditFoodForm = () => {
       {!isLoading && payload && (
         <FoodForm
           title="Edit food"
+          submitLabel="Save changes"
           values={formik.values}
           onSubmit={formik.handleSubmit}
-          onCancelClick={exit}
         />
       )}
     </FormikProvider>

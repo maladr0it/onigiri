@@ -2,12 +2,20 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useField } from "formik";
 
+import { theme } from "../../theme";
 import { FormValues } from "./FoodForm";
+
+const Label = styled.label`
+  display: block;
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+`;
 
 const PreviewContainer = styled.div`
   height: 10rem;
   width: 10rem;
-  background: grey;
+  background-color: ${theme.darkGrey};
 `;
 
 const Preview = styled.img`
@@ -50,7 +58,7 @@ export const ImageUpload: React.FC<Props> = ({ imageUrl }) => {
 
   return (
     <div>
-      <h2>Image Upload</h2>
+      <Label>Image Upload</Label>
       <PreviewContainer>{renderPreview()}</PreviewContainer>
       <input
         type="file"

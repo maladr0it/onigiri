@@ -5,37 +5,32 @@ import styled from "styled-components";
 import { Menu } from "./Menu";
 import { CMS } from "./CMS";
 
-const Container = styled.div`
+const Main = styled.main`
   height: 100%;
   width: 100%;
   max-width: 375px;
   margin: auto;
   display: grid;
-  grid-template-rows: auto 1fr;
-  background-color: #fff;
+  grid-template-rows: 1fr;
 `;
-
-const Main = styled.main``;
 
 export const App = () => {
   return (
     <Router>
-      <Container>
-        <nav>
+      {/* <nav style={{ background: "blue" }}>
           <Link to="/public">Menu</Link>
           <Link to="/cms/menus">CMS</Link>
-        </nav>
-        <Main>
-          <Switch>
-            <Route path="/public/:date?">
-              <Menu />
-            </Route>
-            <Route path="/cms">
-              <CMS />
-            </Route>
-          </Switch>
-        </Main>
-      </Container>
+        </nav> */}
+      <Main>
+        <Switch>
+          <Route path="/public/:date?">
+            <Menu />
+          </Route>
+          <Route path="/cms">
+            <CMS />
+          </Route>
+        </Switch>
+      </Main>
     </Router>
   );
 };

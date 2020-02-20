@@ -46,9 +46,9 @@ export const NewFoodForm = () => {
     <FormikProvider value={formik}>
       <FoodForm
         title="Add new food"
+        submitLabel="Create item"
         values={formik.values}
         onSubmit={formik.handleSubmit}
-        onCancelClick={exit}
       />
     </FormikProvider>
   );
