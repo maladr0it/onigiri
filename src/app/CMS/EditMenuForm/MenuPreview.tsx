@@ -7,6 +7,19 @@ import { MenuPreviewItem } from "./MenuPreviewItem";
 
 const List = styled.ul`
   display: flex;
+  height: 4rem;
+  align-items: center;
+  & > *:not(:first-child) {
+    margin-left: 0.25rem;
+  }
+`;
+
+const Placeholder = styled.div`
+  display: flex;
+  /* hard-code height */
+  height: 4rem;
+  align-items: center;
+  text-align: center;
 `;
 
 export const MenuPreview: React.FC = () => {
@@ -19,14 +32,22 @@ export const MenuPreview: React.FC = () => {
   };
 
   return (
-    <List>
-      {foodItems.map((id) => (
-        <MenuPreviewItem
-          key={id}
-          id={id}
-          onRemoveClick={() => handleRemove(id)}
-        />
-      ))}
-    </List>
+    <>
+      {foodItems.length > 0 ? (
+        <List>
+          {foodItems.map((id) => (
+            <MenuPreviewItem
+              key={id}
+              id={id}
+              onRemoveClick={() => handleRemove(id)}
+            />
+          ))}
+        </List>
+      ) : (
+        <Placeholder>
+          Choose items from the list above for today's menu.
+        </Placeholder>
+      )}
+    </>
   );
 };

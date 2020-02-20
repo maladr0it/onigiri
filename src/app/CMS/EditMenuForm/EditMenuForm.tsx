@@ -5,6 +5,8 @@ import { useFormik, FormikProvider } from "formik";
 
 import { db } from "../../services";
 import { useMenuData } from "../../useMenuData";
+import { PrimaryButton } from "../../common/PrimaryButton";
+import { SecondaryButton } from "../../common/SecondaryButton";
 import { MenuPreview } from "./MenuPreview";
 import { FoodList } from "./FoodList";
 
@@ -20,7 +22,21 @@ const Footer = styled.div`
   position: sticky;
   bottom: 0;
   background: #fff;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.25);
+`;
+
+const Prompt = styled.div`
+  padding: 0.5rem 0;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #03ad00;
+`;
+
+const Controls = styled.div`
+  display: grid;
+  grid-gap: 0.5rem;
+  padding: 0.5rem;
 `;
 
 export interface FormValues {
@@ -92,11 +108,18 @@ export const EditMenuForm: React.FC<Props> = () => {
             <FoodList />
           </div>
           <Footer>
-            <MenuPreview />
-            <button type="submit">SUBMIT</button>
-            <button type="button" onClick={exit}>
-              CANCEL
-            </button>
+            <Prompt>
+              <h1>Menu for XXX</h1>
+            </Prompt>
+            <Controls>
+              <MenuPreview />
+              <PrimaryButton type="submit">
+                {payload ? "Update menu" : "Create Menu"}
+              </PrimaryButton>
+              <SecondaryButton type="button" onClick={exit}>
+                Cancel
+              </SecondaryButton>
+            </Controls>
           </Footer>
         </Form>
       )}

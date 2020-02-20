@@ -5,7 +5,7 @@ import { TextInput } from "../../common/TextInput";
 import { ImageUpload } from "./ImageUpload";
 
 const Form = styled.form`
-  background: red;
+  /* background: red; */
 `;
 
 export interface FormValues {
@@ -35,7 +35,7 @@ export const FoodForm: React.FC<Props> = ({
   return (
     <Form onSubmit={handleSubmit}>
       <h1>{title}</h1>
-      <TextInput label="Name" name="name" />
+      <TextInput label="Name" name="name" required />
       <ImageUpload imageUrl={values.imageUrl} />
       <button type="submit">SUBMIT</button>
       <button type="button" onClick={onCancelClick}>

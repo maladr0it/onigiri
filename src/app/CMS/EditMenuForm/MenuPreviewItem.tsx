@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { useFoodData } from "../../useFoodData";
 
 const ImageContainer = styled.div`
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
 `;
 
 const Image = styled.img`
@@ -30,7 +30,7 @@ export const MenuPreviewItem: React.FC<Props> = ({ id, onRemoveClick }) => {
             {payload.imageUrl ? <Image src={payload.imageUrl} /> : payload.name}
           </ImageContainer>
           <button type="button" onClick={onRemoveClick}>
-            Remove
+            x
           </button>
         </>
       )}
