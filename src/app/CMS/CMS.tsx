@@ -3,14 +3,12 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import { useWeekView } from "../useWeekView";
 import { MenuBrowser } from "./MenuBrowser";
+import { EditMenuForm } from "./EditMenuForm";
 import { EditItemForm } from "./EditItemForm";
-// import { FoodList } from "./FoodList";
 
 export const CMS = () => {
   const { days, selectedDay, setSelectedDay, menu } = useWeekView();
   const match = useRouteMatch();
-
-  console.log(menu);
 
   return (
     <>
@@ -25,8 +23,8 @@ export const CMS = () => {
             menu={menu}
           />
         </Route>
-        <Route path={`${match.url}/editmenu`}>
-          <h1>EDIT MENU</h1>
+        <Route path={`${match.url}/editmenu/:id`}>
+          <EditMenuForm />
         </Route>
         <Route path={`${match.url}/editfood/:id`}>
           <EditItemForm />

@@ -1,13 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { useRouteMatch } from "react-router-dom";
 import { useFormik } from "formik";
 
-interface Props {
+interface RouteParams {
   id: string;
 }
 
-export const EditMenuForm: React.FC<Props> = ({ id }) => {
-  return <h1>hey</h1>;
-  // return (
-  // )
+interface Props {}
+
+export const EditMenuForm: React.FC<Props> = () => {
+  const match = useRouteMatch<RouteParams>();
+
+  const id = match.params.id;
+
+  return <h1>hey menu {id} </h1>;
 };

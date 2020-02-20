@@ -3,29 +3,32 @@ import "firebase/firestore";
 
 import { dateToTimestamp } from "./utils";
 
-export type WithId<T extends {}> = {
-  id: string;
-  data: T;
-};
-
 export interface MenuDoc {
-  date: number;
-  items: string[];
+  id: string;
+  data: {
+    date: number;
+    items: string[];
+  };
 }
 
 export interface FoodItemDoc {
-  name: string;
-  imageUrl?: string;
-  rating?: number;
+  id: string;
+  data: {
+    name: string;
+    imageUrl?: string;
+    rating?: number;
+  };
 }
 
 const db = firebase.firestore();
 
 export const listenForMenu = (
   date: number,
-  onChange: (docs: WithId<MenuDoc>[]) => void,
+  onChange: (doc: MenuDoc | null) => void,
 ) => {
   const timestamp = dateToTimestamp(date);
+
+  console.log("listening for menu", date);
 
   return db
     .collection("menus")
@@ -34,19 +37,18 @@ export const listenForMenu = (
       const docs = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         data: doc.data(),
-      })) as WithId<MenuDoc>[];
-      onChange(docs);
+      })) as MenuDoc[];
+      const doc = docs.length > 0 ? docs[0] : null;
+      onChange(doc);
     });
 };
 
-export const listenForFoodList = (
-  onChange: (docs: WithId<FoodItemDoc>[]) => void,
-) => {
+export const listenForFoodList = (onChange: (docs: FoodItemDoc[]) => void) => {
   return db.collection("foodItems").onSnapshot((querySnapshot) => {
     const docs = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       data: doc.data(),
-    })) as WithId<FoodItemDoc>[];
+    })) as FoodItemDoc[];
     onChange(docs);
   });
 };
@@ -59,11 +61,14 @@ export const listenForFoodItem = (
     .collection("foodItems")
     .doc(id)
     .onSnapshot((docSnapshot) => {
-      const doc = docSnapshot.data() as FoodItemDoc;
+      const doc = {
+        id,
+        data: docSnapshot.data(),
+      } as FoodItemDoc;
       onChange(doc);
     });
 };
 
-export const addFoodItem = async (data: FoodItemDoc) => {
+export const addFoodItem = async (data: FoodItemDoc["data"]) => {
   return db.collection("foodItems").add(data);
 };

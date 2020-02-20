@@ -25,19 +25,16 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-interface Props {
-  id: string;
-  data?: db.FoodItemDoc;
-}
+interface Props extends db.FoodItemDoc {}
 
-export const FoodItem: React.FC<Props> = ({ data }) => {
+export const FoodItem: React.FC<Props> = ({ id, data }) => {
   return (
     <Item>
       <ImageContainer>
-        {data?.imageUrl && <Image src={data?.imageUrl} />}
+        {data.imageUrl && <Image src={data.imageUrl} />}
       </ImageContainer>
-      <div>{data?.name}</div>
-      <div>{data?.rating}</div>
+      <div>{data.name}</div>
+      <div>{data.rating}</div>
     </Item>
   );
 };

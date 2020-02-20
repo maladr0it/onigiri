@@ -20,7 +20,7 @@ export const MenuBrowserItem: React.FC<Props> = ({ id }) => {
 
   return (
     <Item>
-      <FoodItem id={id} data={data} />
+      {data && <FoodItem id={id} data={data} />}
       <div>
         <button>Edit Item</button>
         <button>Remove</button>
