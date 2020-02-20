@@ -5,19 +5,15 @@ import { dateToTimestamp } from "./utils";
 
 export interface MenuDoc {
   id: string;
-  data: {
-    date: number;
-    items: string[];
-  };
+  date: number;
+  items: string[];
 }
 
 export interface FoodItemDoc {
   id: string;
-  data: {
-    name: string;
-    imageUrl?: string;
-    rating?: number;
-  };
+  name: string;
+  imageUrl?: string;
+  rating?: number;
 }
 
 const db = firebase.firestore();
@@ -36,7 +32,7 @@ export const listenForMenuByDate = (
     .onSnapshot((querySnapshot) => {
       const docs = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        data: doc.data(),
+        ...doc.data(),
       })) as MenuDoc[];
       const doc = docs.length > 0 ? docs[0] : null;
       onChange(doc);
@@ -53,7 +49,7 @@ export const listenForMenuById = (
     .onSnapshot((docSnapshot) => {
       const doc = {
         id: docSnapshot.id,
-        data: docSnapshot.data(),
+        ...docSnapshot.data(),
       } as MenuDoc;
       onChange(doc);
     });
@@ -63,7 +59,7 @@ export const listenForFoodList = (onChange: (docs: FoodItemDoc[]) => void) => {
   return db.collection("foodItems").onSnapshot((querySnapshot) => {
     const docs = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      data: doc.data(),
+      ...doc.data(),
     })) as FoodItemDoc[];
     onChange(docs);
   });
@@ -79,12 +75,12 @@ export const listenForFoodItem = (
     .onSnapshot((docSnapshot) => {
       const doc = {
         id,
-        data: docSnapshot.data(),
+        ...docSnapshot.data(),
       } as FoodItemDoc;
       onChange(doc);
     });
 };
 
-export const addFoodItem = async (data: FoodItemDoc["data"]) => {
+export const addFoodItem = async (data: Omit<FoodItemDoc, "id">) => {
   return db.collection("foodItems").add(data);
 };

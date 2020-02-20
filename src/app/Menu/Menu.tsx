@@ -16,9 +16,9 @@ export const Menu = () => {
         selectedDay={selectedDay}
         onDayClick={setSelectedDay}
       />
-      {menu && (
+      {!menu.isLoading && menu.payload && (
         <ul>
-          {menu.data.items.map((id) => (
+          {menu.payload.items.map((id) => (
             <MenuItem key={id} id={id} />
           ))}
         </ul>

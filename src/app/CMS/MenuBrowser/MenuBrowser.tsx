@@ -38,7 +38,7 @@ export const MenuBrowser: React.FC<Props> = ({
       />
       {menu && (
         <ul>
-          {menu.data.items.map((id) => (
+          {menu.items.map((id) => (
             <MenuBrowserItem key={id} id={id} />
           ))}
         </ul>

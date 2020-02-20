@@ -20,14 +20,14 @@ interface Props {
 }
 
 export const MenuPreviewItem: React.FC<Props> = ({ id, onRemoveClick }) => {
-  const { data } = useFoodData(id);
+  const { isLoading, payload } = useFoodData(id);
 
   return (
     <li>
-      {data && (
+      {!isLoading && payload && (
         <>
           <ImageContainer>
-            {data.imageUrl ? <Image src={data.imageUrl} /> : data.name}
+            {payload.imageUrl ? <Image src={payload.imageUrl} /> : payload.name}
           </ImageContainer>
           <button type="button" onClick={onRemoveClick}>
             Remove

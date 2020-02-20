@@ -36,7 +36,7 @@ export const EditMenuForm: React.FC<Props> = () => {
   const match = useRouteMatch<RouteParams>();
   const id = match.params.id;
 
-  const { data } = useMenuData(id);
+  const { isLoading, payload } = useMenuData(id);
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -49,12 +49,12 @@ export const EditMenuForm: React.FC<Props> = () => {
 
   // TODO: try to avoid updating state in response to state update
   useEffect(() => {
-    if (data) {
+    if (payload) {
       formik.setValues({
-        added: data.items,
+        added: payload.items,
       });
     }
-  }, [data]);
+  }, [payload]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

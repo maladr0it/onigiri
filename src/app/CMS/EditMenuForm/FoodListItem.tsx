@@ -12,14 +12,14 @@ const Item = styled.li`
 
 interface Props extends React.ComponentProps<typeof FoodItem> {}
 
-export const FoodListItem: React.FC<Props> = ({ id, data }) => {
+export const FoodListItem: React.FC<Props> = ({ id, ...rest }) => {
   const [field] = useField({ name: "added", value: id, type: "checkbox" });
 
   // console.log(field);
 
   return (
     <Item>
-      <FoodItem key={id} id={id} data={data} />
+      <FoodItem key={id} id={id} {...rest} />
       <input type="checkbox" {...field} />
     </Item>
   );

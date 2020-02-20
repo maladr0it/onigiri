@@ -24,14 +24,12 @@ const Image = styled.img`
 
 interface Props extends db.FoodItemDoc {}
 
-export const FoodItem: React.FC<Props> = ({ id, data }) => {
+export const FoodItem: React.FC<Props> = ({ id, name, imageUrl, rating }) => {
   return (
     <Item>
-      <ImageContainer>
-        {data.imageUrl && <Image src={data.imageUrl} />}
-      </ImageContainer>
-      <div>{data.name}</div>
-      <div>{data.rating}</div>
+      <ImageContainer>{imageUrl && <Image src={imageUrl} />}</ImageContainer>
+      <div>{name}</div>
+      <div>{rating}</div>
     </Item>
   );
 };

@@ -1,7 +1,7 @@
 import { useReducer, useEffect } from "react";
 
 interface State<D> {
-  data: D | null;
+  payload: D | null;
   isLoading: boolean;
   isError: boolean;
 }
@@ -18,7 +18,7 @@ type Action<D> =
       type: "error_occured";
     };
 
-    // We create the reducer dynamically 
+// We create the reducer dynamically so that we may pass in a generic type
 const createSubscriptionReducer = <D>() => (
   state: State<D>,
   action: Action<D>,
@@ -33,7 +33,7 @@ const createSubscriptionReducer = <D>() => (
     }
     case "data_updated": {
       return {
-        data: action.payload,
+        payload: action.payload,
         isLoading: false,
         isError: false,
       };
@@ -57,7 +57,7 @@ export function useSubscription<P, D>(
   param: P,
 ) {
   const [state, dispatch] = useReducer(createSubscriptionReducer<D>(), {
-    data: null,
+    payload: null,
     isLoading: false,
     isError: false,
   });

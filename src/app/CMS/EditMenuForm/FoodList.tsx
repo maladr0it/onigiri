@@ -18,7 +18,7 @@ export const FoodList = () => {
   return (
     <ul>
       {items?.map((item) => (
-        <FoodListItem key={item.id} id={item.id} data={item.data} />
+        <FoodListItem key={item.id} {...item} />
       ))}
     </ul>
   );

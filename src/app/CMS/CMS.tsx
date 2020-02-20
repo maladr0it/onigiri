@@ -17,7 +17,7 @@ export const CMS = () => {
           days={days}
           selectedDay={selectedDay}
           onDayClick={setSelectedDay}
-          menu={menu}
+          menu={menu.payload}
         />
       </Route>
       <Route path={`${match.url}/editmenu/:id`}>
