@@ -1,9 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 import { useFormik, FormikProvider, FormikErrors } from "formik";
 
 import { db, storage } from "../../services";
 import { TextInput } from "../TextInput";
 import { ImageUpload } from "./ImageUpload";
+
+const Form = styled.form``;
 
 export interface FormValues {
   name: string;
@@ -48,12 +51,12 @@ export const EditFoodForm = () => {
 
   return (
     <FormikProvider value={formik}>
-      <form onSubmit={handleSubmit}>
+      <Form style={{ background: "red" }} onSubmit={handleSubmit}>
         <h1>Form</h1>
         <TextInput label="Name" name="name" />
         <ImageUpload imageUrl={formik.values.imageUrl} />
         <button type="submit">Submit</button>
-      </form>
+      </Form>
     </FormikProvider>
   );
 };

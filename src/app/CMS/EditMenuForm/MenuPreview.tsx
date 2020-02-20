@@ -5,6 +5,10 @@ import { useField } from "formik";
 import { FormValues } from "./EditMenuForm";
 import { MenuPreviewItem } from "./MenuPreviewItem";
 
+const List = styled.ul`
+  display: flex;
+`;
+
 export const MenuPreview: React.FC = () => {
   const [field, _, helpers] = useField<FormValues["added"]>({ name: "added" });
   const foodItems = field.value;
@@ -15,13 +19,14 @@ export const MenuPreview: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>MENU_PREVIEW</h1>
-      <ul>
-        {foodItems.map((id) => (
-          <MenuPreviewItem key={id} id={id} onRemoveClick={handleRemove} />
-        ))}
-      </ul>
-    </div>
+    <List>
+      {foodItems.map((id) => (
+        <MenuPreviewItem
+          key={id}
+          id={id}
+          onRemoveClick={() => handleRemove(id)}
+        />
+      ))}
+    </List>
   );
 };

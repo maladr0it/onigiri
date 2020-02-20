@@ -6,6 +6,21 @@ import { useFormik, FormikProvider } from "formik";
 import { MenuPreview } from "./MenuPreview";
 import { FoodList } from "./FoodList";
 
+const Form = styled.form`
+  min-height: 100%;
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-gap: 0.5rem;
+`;
+
+const Footer = styled.div`
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+`;
+
 export interface FormValues {
   added: string[];
 }
@@ -37,13 +52,16 @@ export const EditMenuForm: React.FC<Props> = () => {
 
   return (
     <FormikProvider value={formik}>
-      <form onSubmit={handleSubmit}>
-        <h1>Editing menu {id}</h1>
-        <MenuPreview />
-        <hr />
-        <FoodList />
-        <button type="submit">SUBMIT</button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <div>
+          <h1>Editing menu {id}</h1>
+          <FoodList />
+        </div>
+        <Footer>
+          <MenuPreview />
+          <button type="submit">SUBMIT</button>
+        </Footer>
+      </Form>
     </FormikProvider>
   );
 };

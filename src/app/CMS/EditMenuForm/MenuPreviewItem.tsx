@@ -3,9 +3,20 @@ import styled from "styled-components";
 
 import { useFoodData } from "../../useFoodData";
 
+const ImageContainer = styled.div`
+  width: 4rem;
+  height: 4rem;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 interface Props {
   id: string;
-  onRemoveClick: (id: string) => void;
+  onRemoveClick: () => void;
 }
 
 export const MenuPreviewItem: React.FC<Props> = ({ id, onRemoveClick }) => {
@@ -13,11 +24,16 @@ export const MenuPreviewItem: React.FC<Props> = ({ id, onRemoveClick }) => {
 
   return (
     <li>
-      id:{id}
-      <button type="button" onClick={() => onRemoveClick(id)}>
-        Remove
-      </button>
-      {/* <img src={data?.imageUrl} /> */}
+      {data && (
+        <>
+          <ImageContainer>
+            {data.imageUrl ? <Image src={data.imageUrl} /> : data.name}
+          </ImageContainer>
+          <button type="button" onClick={onRemoveClick}>
+            Remove
+          </button>
+        </>
+      )}
     </li>
   );
 };
