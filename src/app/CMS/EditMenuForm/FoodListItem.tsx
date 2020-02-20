@@ -1,7 +1,8 @@
 import React from "react";
+import styled from "styled-components";
 
 import { db } from "../../services";
-import { ToggleButton } from "../../common/ToggleButton";
+import { ToggleAugment } from "./ToggleAugment";
 import { FoodItem } from "../../common/FoodItem";
 
 interface Props extends db.FoodItemDoc {}
@@ -13,7 +14,7 @@ export const FoodListItem: React.FC<Props> = ({ id, ...rest }) => {
         key={id}
         id={id}
         {...rest}
-        augment={<ToggleButton name="added" value={id} />}
+        augment={<ToggleAugment name="added" value={id} />}
       />
     </li>
   );

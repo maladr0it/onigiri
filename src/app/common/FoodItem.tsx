@@ -2,13 +2,23 @@ import React from "react";
 import styled from "styled-components";
 
 import { db } from "../services";
+import { theme } from "../theme";
 
 const Item = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-gap: 0.5rem;
+  grid-template-columns: 1fr 4rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.24);
+`;
+
+const Content = styled.div`
+  display: grid;
   padding: 0.5rem;
-  border-bottom: 2px solid #efefef;
+  grid-template-columns: auto 1fr;
+  grid-gap: 0.5rem;
 `;
 
 const ItemMiddle = styled.div`
@@ -16,9 +26,14 @@ const ItemMiddle = styled.div`
   grid-template-rows: 1fr auto;
 `;
 
+const Title = styled.div`
+  font-size: 0.875rem;
+  font-weight: bold;
+`;
+
 const ImageContainer = styled.div`
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
   background: #c4c4c4;
   border-radius: 8px;
   overflow: hidden;
@@ -40,14 +55,11 @@ const TagList = styled.ul`
 `;
 
 const Tag = styled.li`
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 50%;
-  background-color: #ededed;
-`;
-
-const AugmentContainer = styled.div`
-  align-self: center;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  background-color: ${theme.lightGrey};
+  color: ${theme.textOnBg};
+  padding: 0.25rem;
 `;
 
 interface Props extends db.FoodItemDoc {
@@ -63,16 +75,18 @@ export const FoodItem: React.FC<Props> = ({
 }) => {
   return (
     <Item>
-      <ImageContainer>{imageUrl && <Image src={imageUrl} />}</ImageContainer>
-      <ItemMiddle>
-        <div>{name}</div>
-        <TagList>
-          <Tag />
-          <Tag />
-          <Tag />
-        </TagList>
-      </ItemMiddle>
-      <AugmentContainer>{augment}</AugmentContainer>
+      <Content>
+        <ImageContainer>{imageUrl && <Image src={imageUrl} />}</ImageContainer>
+        <ItemMiddle>
+          <Title>{name}</Title>
+          <div style={{ fontSize: "0.875rem" }}>Rating: {rating || "0"}%</div>
+          <TagList>
+            <Tag>Gluten-free</Tag>
+            <Tag>Vegan</Tag>
+          </TagList>
+        </ItemMiddle>
+      </Content>
+      {augment}
     </Item>
   );
 };

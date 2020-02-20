@@ -17,10 +17,6 @@ const Main = styled.main`
 export const App = () => {
   return (
     <Router>
-      {/* <nav style={{ background: "blue" }}>
-          <Link to="/public">Menu</Link>
-          <Link to="/cms/menus">CMS</Link>
-        </nav> */}
       <Main>
         <Switch>
           <Route path="/public/:date?">

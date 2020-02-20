@@ -1,22 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 
+import { getDayString } from "../utils";
 import { useMenuList } from "../useMenuList";
 import { WeekViewer } from "../common/WeekViewer";
-import { MenuTitle } from "../common/MenuTitle";
+import { PageHeader } from "../common/PageHeader";
 import { MenuItem } from "./MenuItem";
 
 export const Menu = () => {
   const { days, selectedDay, changeDay, isLoading, payload } = useMenuList();
 
   return (
-    <>
-      <WeekViewer
-        days={days}
-        selectedDay={selectedDay}
-        onDayClick={changeDay}
-      />
-      <MenuTitle day={selectedDay} />
+    <div>
+      <PageHeader title={`${getDayString(selectedDay)}'s Menu`}>
+        <WeekViewer
+          days={days}
+          selectedDay={selectedDay}
+          onDayClick={changeDay}
+        />
+      </PageHeader>
       {!isLoading && payload && payload.items.length > 0 && (
         <ul>
           {payload.items.map((id) => (
@@ -27,6 +29,6 @@ export const Menu = () => {
       {!isLoading && (!payload || payload.items.length === 0) && (
         <h3>There are no items added to the menu yet...</h3>
       )}
-    </>
+    </div>
   );
 };

@@ -1,3 +1,15 @@
+const DAYS = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+export const getDayString = (day: number) => DAYS[new Date(day).getUTCDay()];
+
 // get the day without hours and minutes etc
 export const getDay = (date: number) => {
   const current = new Date(date);

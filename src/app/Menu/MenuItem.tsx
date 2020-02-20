@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { useFoodData } from "../useFoodData";
 import { FoodItem } from "../common/FoodItem";
+import { VoteAugment } from "./VoteAugment";
 
 interface Props {
   id: string;
@@ -13,7 +14,7 @@ export const MenuItem: React.FC<Props> = ({ id }) => {
   return (
     <li>
       {!isLoading && payload && (
-        <FoodItem {...payload} augment={payload.rating || "bad"} />
+        <FoodItem {...payload} augment={<VoteAugment />} />
       )}
     </li>
   );

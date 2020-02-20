@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 
 import { useMenuList } from "../../useMenuList";
 import { WeekViewer } from "../../common/WeekViewer";
-import { MenuTitle } from "../../common/MenuTitle";
 import { MenuBrowserItem } from "./MenuBrowserItem";
 import { db } from "../../services";
 
@@ -41,7 +40,6 @@ export const MenuBrowser: React.FC<Props> = () => {
         onDayClick={changeDay}
       />
       <div>
-        <MenuTitle day={selectedDay} />
         {!isLoading && payload && payload.items.length > 0 && (
           <>
             <ul>

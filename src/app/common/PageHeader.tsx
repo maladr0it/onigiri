@@ -13,6 +13,7 @@ const Header = styled.header`
   background: ${theme.red};
   position: sticky;
   top: 0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.07);
 `;
 
 const Strip = styled.div`

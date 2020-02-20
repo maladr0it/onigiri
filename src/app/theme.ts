@@ -10,4 +10,4 @@ export const theme = {
   darkGrey: "#B0B0B0",
   textOnBg: "#4B4B4B",
   text: "#040404",
-};
+} as const;
