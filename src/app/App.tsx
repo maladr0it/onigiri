@@ -23,7 +23,7 @@ export const App = () => {
         </nav>
         <Main>
           <Switch>
-            <Route path="/" exact>
+            <Route path="/public/:date?">
               <Menu />
             </Route>
             <Route path="/cms">

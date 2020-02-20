@@ -1,6 +1,12 @@
-export const getWeekdays = (now: number) => {
-  const current = new Date(now);
+// get the day without hours and minutes etc
+export const getDay = (date: number) => {
+  const current = new Date(date);
   current.setUTCHours(0, 0, 0, 0);
+  return current.valueOf();
+};
+
+export const getWeekdays = (date: number) => {
+  const current = new Date(getDay(date));
   current.setUTCDate(current.getUTCDate() - current.getUTCDay() + 1);
 
   let week: number[] = [];

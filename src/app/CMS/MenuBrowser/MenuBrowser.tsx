@@ -1,31 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import { db } from "../../services";
+import { useMenuList } from "../../useMenuList";
 import { WeekViewer } from "../../common/WeekViewer";
 import { MenuBrowserItem } from "./MenuBrowserItem";
 
-interface Props {
-  days: number[];
-  selectedDay: number;
-  onDayClick: (day: number) => void;
-  menu: { payload: db.MenuDoc | null; isLoading: boolean; isError: boolean };
-}
+interface Props {}
 
-export const MenuBrowser: React.FC<Props> = ({
-  days,
-  selectedDay,
-  onDayClick,
-  menu,
-}) => {
+export const MenuBrowser: React.FC<Props> = () => {
   const history = useHistory();
-  const match = useRouteMatch();
+  const { days, selectedDay, changeDay, isLoading, payload } = useMenuList();
 
-  const handleAddItemsClick = () => {
-    if (menu.payload) {
-      history.push(`${match.url}/editmenu/${menu.payload.id}`);
-    }
+  const handleEditMenuClick = () => {
+    history.push(`/cms/editmenu/${selectedDay}`);
   };
 
   return (
@@ -34,16 +22,17 @@ export const MenuBrowser: React.FC<Props> = ({
       <WeekViewer
         days={days}
         selectedDay={selectedDay}
-        onDayClick={onDayClick}
+        onDayClick={changeDay}
       />
-      {!menu.isLoading && menu.payload && (
+      {!isLoading && payload && (
         <ul>
-          {menu.payload.items.map((id) => (
+          {payload.items.map((id) => (
             <MenuBrowserItem key={id} id={id} />
           ))}
         </ul>
       )}
-      <button onClick={handleAddItemsClick}>ADD ITEMS</button>
+      {!isLoading && !payload && <h2>THERE ARE NO ITEMS</h2>}
+      <button onClick={handleEditMenuClick}>ADD ITEMS</button>
     </>
   );
 };

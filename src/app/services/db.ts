@@ -105,3 +105,10 @@ export const listenForFoodItem = (
 export const addFoodItem = async (data: Omit<FoodItemDoc, "id">) => {
   return db.collection("foodItems").add(data);
 };
+
+export const setMenuItems = async (menuId: string, items: MenuDoc["items"]) => {
+  return db
+    .collection("menus")
+    .doc(menuId)
+    .set({ items }, { merge: true });
+};

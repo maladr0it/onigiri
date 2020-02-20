@@ -1,11 +1,11 @@
 import React from "react";
 
-import { useWeekView } from "../useWeekView";
+import { useMenuList } from "../useMenuList";
 import { WeekViewer } from "../common/WeekViewer";
 import { MenuItem } from "./MenuItem";
 
 export const Menu = () => {
-  const { days, selectedDay, setSelectedDay, menu } = useWeekView();
+  const { days, selectedDay, changeDay, isLoading, payload } = useMenuList();
 
   return (
     <>
@@ -14,15 +14,18 @@ export const Menu = () => {
       <WeekViewer
         days={days}
         selectedDay={selectedDay}
-        onDayClick={setSelectedDay}
+        onDayClick={changeDay}
       />
-      {!menu.isLoading && menu.payload && (
+      {!isLoading && payload && (
         <ul>
-          {menu.payload.items.map((id) => (
+          {payload.items.map((id) => (
             <MenuItem key={id} id={id} />
           ))}
           {selectedDay}
         </ul>
+      )}
+      {!isLoading && !payload && (
+        <h3>There are no items added to the menu yet...</h3>
       )}
     </>
   );

@@ -1,26 +1,23 @@
 import React from "react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
-import { useWeekView } from "../useWeekView";
 import { MenuBrowser } from "./MenuBrowser";
 import { EditMenuForm } from "./EditMenuForm";
 import { EditFoodForm } from "./EditFoodForm";
 
 export const CMS = () => {
-  const { days, selectedDay, setSelectedDay, menu } = useWeekView();
+  // const { days, selectedDay, setSelectedDay, menu } = useWeekView();
   const match = useRouteMatch();
+
+  console.log(match.url);
 
   return (
     <Switch>
-      <Route exact path={`${match.url}`}>
-        <MenuBrowser
-          days={days}
-          selectedDay={selectedDay}
-          onDayClick={setSelectedDay}
-          menu={menu}
-        />
+      <Route path={`${match.url}/menus/:date?`}>
+        <MenuBrowser />
       </Route>
-      <Route path={`${match.url}/editmenu/:id`}>
+      <Route path={`${match.url}/editmenu/:date`}>
+        <h1>EDIT</h1>
         <EditMenuForm />
       </Route>
       <Route path={`${match.url}/editfood/:id`}>

@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useRouteMatch } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { useFormik, FormikProvider } from "formik";
 
+import { db } from "../../services";
 import { useMenuData } from "../../useMenuData";
 import { MenuPreview } from "./MenuPreview";
 import { FoodList } from "./FoodList";
@@ -27,23 +28,32 @@ export interface FormValues {
 }
 
 interface RouteParams {
-  id: string;
+  date: string;
 }
 
 interface Props {}
 
 export const EditMenuForm: React.FC<Props> = () => {
+  const history = useHistory();
   const match = useRouteMatch<RouteParams>();
-  const id = match.params.id;
+  const date = parseInt(match.params.date);
 
-  const { isLoading, payload } = useMenuData(id);
+  const { isLoading, payload } = useMenuData(date);
+
+  console.log(payload?.date);
 
   const formik = useFormik<FormValues>({
     initialValues: {
       added: [],
     },
     onSubmit: async (values) => {
-      console.log(values);
+      console.log("updating...");
+      if (payload) {
+        await db.setMenuItems(payload.id, values.added);
+        history.push(`/cms/menus/${date}`);
+      } else {
+        console.log("item doesn't exist!!!");
+      }
     },
   });
 
@@ -61,14 +71,12 @@ export const EditMenuForm: React.FC<Props> = () => {
     formik.handleSubmit();
   };
 
-  console.log(payload);
-
   return (
     <FormikProvider value={formik}>
       {!isLoading && payload && (
         <Form onSubmit={handleSubmit}>
           <div>
-            <h1>Editing menu {id}</h1>
+            <h1>Editing menu {payload.id}</h1>
             <FoodList />
           </div>
           <Footer>
