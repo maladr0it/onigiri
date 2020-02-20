@@ -2,7 +2,7 @@ import { db } from "./services";
 
 import { useSubscription } from "./useSubscription";
 
-export const useFoodData = (id: string) => {
-  const state = useSubscription(db.listenForFoodItem, id);
+export const useMenuData = (id: string) => {
+  const state = useSubscription(db.listenForMenuById, id);
   return state;
 };

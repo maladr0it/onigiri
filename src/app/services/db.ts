@@ -22,7 +22,7 @@ export interface FoodItemDoc {
 
 const db = firebase.firestore();
 
-export const listenForMenu = (
+export const listenForMenuByDate = (
   date: number,
   onChange: (doc: MenuDoc | null) => void,
 ) => {
@@ -39,6 +39,22 @@ export const listenForMenu = (
         data: doc.data(),
       })) as MenuDoc[];
       const doc = docs.length > 0 ? docs[0] : null;
+      onChange(doc);
+    });
+};
+
+export const listenForMenuById = (
+  id: string,
+  onChange: (doc: MenuDoc | null) => void,
+) => {
+  return db
+    .collection("menus")
+    .doc(id)
+    .onSnapshot((docSnapshot) => {
+      const doc = {
+        id: docSnapshot.id,
+        data: docSnapshot.data(),
+      } as MenuDoc;
       onChange(doc);
     });
 };

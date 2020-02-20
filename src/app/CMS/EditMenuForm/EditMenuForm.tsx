@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useRouteMatch } from "react-router-dom";
 import { useFormik, FormikProvider } from "formik";
 
+import { useMenuData } from "../../useMenuData";
 import { MenuPreview } from "./MenuPreview";
 import { FoodList } from "./FoodList";
 
@@ -32,18 +33,28 @@ interface RouteParams {
 interface Props {}
 
 export const EditMenuForm: React.FC<Props> = () => {
+  const match = useRouteMatch<RouteParams>();
+  const id = match.params.id;
+
+  const { data } = useMenuData(id);
+
   const formik = useFormik<FormValues>({
     initialValues: {
       added: [],
     },
-
     onSubmit: async (values) => {
       console.log(values);
     },
   });
 
-  const match = useRouteMatch<RouteParams>();
-  const id = match.params.id;
+  // TODO: try to avoid updating state in response to state update
+  useEffect(() => {
+    if (data) {
+      formik.setValues({
+        added: data.items,
+      });
+    }
+  }, [data]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
