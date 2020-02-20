@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useField } from "formik";
 
+import { FormValues } from "./EditFoodForm";
+
 const PreviewContainer = styled.div`
   height: 10rem;
   width: 10rem;
@@ -15,12 +17,13 @@ const Preview = styled.img`
 `;
 
 interface Props {
-  name: string;
   imageUrl?: string;
 }
 
-export const ImageUpload: React.FC<Props> = ({ name, imageUrl }) => {
-  const [field, _, helpers] = useField({ name });
+export const ImageUpload: React.FC<Props> = ({ imageUrl }) => {
+  const [field, _, helpers] = useField<FormValues["imageUpload"]>({
+    name: "imageUpload",
+  });
   const [thumbnail, setThumbnail] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export const ImageUpload: React.FC<Props> = ({ name, imageUrl }) => {
     reader.onloadend = () => {
       setThumbnail(reader.result as string);
     };
-    reader.readAsDataURL(field.value);
+    reader.readAsDataURL(field.value as Blob);
   }, [field.value]);
 
   const renderPreview = () => {

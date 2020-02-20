@@ -10,6 +10,7 @@ export const Menu = () => {
   return (
     <>
       <h2>Menu Page</h2>
+      <hr />
       <WeekViewer
         days={days}
         selectedDay={selectedDay}

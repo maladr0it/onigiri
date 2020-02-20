@@ -4,7 +4,7 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useWeekView } from "../useWeekView";
 import { MenuBrowser } from "./MenuBrowser";
 import { EditMenuForm } from "./EditMenuForm";
-import { EditItemForm } from "./EditItemForm";
+import { EditFoodForm } from "./EditFoodForm";
 
 export const CMS = () => {
   const { days, selectedDay, setSelectedDay, menu } = useWeekView();
@@ -27,7 +27,7 @@ export const CMS = () => {
           <EditMenuForm />
         </Route>
         <Route path={`${match.url}/editfood/:id`}>
-          <EditItemForm />
+          <EditFoodForm />
         </Route>
       </Switch>
     </>

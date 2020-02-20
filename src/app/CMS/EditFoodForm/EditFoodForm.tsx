@@ -1,17 +1,17 @@
 import React from "react";
 import { useFormik, FormikProvider, FormikErrors } from "formik";
 
-import { db, storage } from "../services";
-import { TextInput } from "./TextInput";
+import { db, storage } from "../../services";
+import { TextInput } from "../TextInput";
 import { ImageUpload } from "./ImageUpload";
 
-interface FormValues {
+export interface FormValues {
   name: string;
   imageUrl?: string;
   imageUpload: File | null;
 }
 
-export const EditItemForm = () => {
+export const EditFoodForm = () => {
   const formik = useFormik<FormValues>({
     initialValues: {
       name: "",
@@ -51,7 +51,7 @@ export const EditItemForm = () => {
       <form onSubmit={handleSubmit}>
         <h1>Form</h1>
         <TextInput label="Name" name="name" />
-        <ImageUpload name="imageUpload" imageUrl={formik.values.imageUrl} />
+        <ImageUpload imageUrl={formik.values.imageUrl} />
         <button type="submit">Submit</button>
       </form>
     </FormikProvider>

@@ -43,7 +43,7 @@ export const MenuBrowser: React.FC<Props> = ({
           ))}
         </ul>
       )}
-      <button onClick={handleAddItemsClick}>ADD ITEMZ</button>
+      <button onClick={handleAddItemsClick}>ADD ITEMS</button>
     </>
   );
 };

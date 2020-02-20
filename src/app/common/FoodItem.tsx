@@ -8,9 +8,6 @@ const Item = styled.div`
   grid-template-columns: auto 1fr auto;
   align-items: center;
   grid-gap: 0.5rem;
-  &:nth-child(odd) {
-    background: palegreen;
-  }
 `;
 
 const ImageContainer = styled.div`
