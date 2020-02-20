@@ -40,19 +40,23 @@ export const EditMenuForm: React.FC<Props> = () => {
 
   const { isLoading, payload } = useMenuData(date);
 
-  console.log(payload?.date);
+  const isNewMenu = !isLoading && !payload;
+
+  const exit = () => {
+    history.push(`/cms/menus/${date}`);
+  };
 
   const formik = useFormik<FormValues>({
     initialValues: {
       added: [],
     },
     onSubmit: async (values) => {
-      console.log("updating...");
       if (payload) {
         await db.setMenuItems(payload.id, values.added);
-        history.push(`/cms/menus/${date}`);
+        exit();
       } else {
-        console.log("item doesn't exist!!!");
+        await db.addMenu({ date, items: values.added });
+        exit();
       }
     },
   });
@@ -73,15 +77,18 @@ export const EditMenuForm: React.FC<Props> = () => {
 
   return (
     <FormikProvider value={formik}>
-      {!isLoading && payload && (
+      {!isLoading && (
         <Form onSubmit={handleSubmit}>
           <div>
-            <h1>Editing menu {payload.id}</h1>
+            <h1>{payload ? "Edit menu" : "Create menu"}</h1>
             <FoodList />
           </div>
           <Footer>
             <MenuPreview />
             <button type="submit">SUBMIT</button>
+            <button type="button" onClick={exit}>
+              CANCEL
+            </button>
           </Footer>
         </Form>
       )}

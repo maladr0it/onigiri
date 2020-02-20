@@ -32,7 +32,7 @@ export const MenuBrowser: React.FC<Props> = () => {
         </ul>
       )}
       {!isLoading && !payload && <h2>THERE ARE NO ITEMS</h2>}
-      <button onClick={handleEditMenuClick}>ADD ITEMS</button>
+      <button onClick={handleEditMenuClick}>ADD MORE ITEMS</button>
     </>
   );
 };

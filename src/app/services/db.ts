@@ -112,3 +112,11 @@ export const setMenuItems = async (menuId: string, items: MenuDoc["items"]) => {
     .doc(menuId)
     .set({ items }, { merge: true });
 };
+
+export const addMenu = (menu: Omit<MenuDoc, "id">) => {
+  const { date, ...rest } = menu;
+  return db.collection("menus").add({
+    date: dateToTimestamp(date),
+    ...rest,
+  });
+};

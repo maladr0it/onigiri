@@ -15,8 +15,6 @@ interface Props extends React.ComponentProps<typeof FoodItem> {}
 export const FoodListItem: React.FC<Props> = ({ id, ...rest }) => {
   const [field] = useField({ name: "added", value: id, type: "checkbox" });
 
-  // console.log(field);
-
   return (
     <Item>
       <FoodItem key={id} id={id} {...rest} />
