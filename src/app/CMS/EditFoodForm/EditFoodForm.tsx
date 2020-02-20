@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useRouteMatch, useHistory } from "react-router-dom";
 import { useFormik, FormikProvider, FormikErrors } from "formik";
 
 import { db, storage } from "../../services";
 import { TextInput } from "../TextInput";
 import { ImageUpload } from "./ImageUpload";
+import { useFoodData } from "../../useFoodData";
 
 const Form = styled.form``;
+
+interface RouteParams {
+  id: string;
+}
 
 export interface FormValues {
   name: string;
@@ -15,6 +21,16 @@ export interface FormValues {
 }
 
 export const EditFoodForm = () => {
+  const history = useHistory();
+  const match = useRouteMatch<RouteParams>();
+  const id = match.params.id;
+
+  const { isLoading, payload } = useFoodData(id);
+
+  const exit = () => {
+    history.goBack();
+  };
+
   const formik = useFormik<FormValues>({
     initialValues: {
       name: "",
@@ -39,10 +55,27 @@ export const EditFoodForm = () => {
       if (imageUpload) {
         url = await storage.uploadMenuItem(imageUpload);
       }
+      const data = { imageUrl: url, ...rest };
 
-      db.addFoodItem({ imageUrl: url, ...rest });
+      if (payload) {
+        db.setFoodItem(id, data);
+        exit();
+      } else {
+        db.addFoodItem(data);
+        exit();
+      }
     },
   });
+
+  // Set the form values if there is payload data
+  useEffect(() => {
+    if (payload) {
+      formik.setValues({
+        ...formik.values,
+        ...payload,
+      });
+    }
+  }, [payload]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -51,12 +84,14 @@ export const EditFoodForm = () => {
 
   return (
     <FormikProvider value={formik}>
-      <Form style={{ background: "red" }} onSubmit={handleSubmit}>
-        <h1>Form</h1>
-        <TextInput label="Name" name="name" />
-        <ImageUpload imageUrl={formik.values.imageUrl} />
-        <button type="submit">Submit</button>
-      </Form>
+      {!isLoading && (
+        <Form style={{ background: "red" }} onSubmit={handleSubmit}>
+          <h1>{payload ? "Edit food" : "Add new food"}</h1>
+          <TextInput label="Name" name="name" />
+          <ImageUpload imageUrl={formik.values.imageUrl} />
+          <button type="submit">Submit</button>
+        </Form>
+      )}
     </FormikProvider>
   );
 };

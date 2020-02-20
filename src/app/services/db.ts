@@ -78,7 +78,6 @@ export const listenForFoodList = (
       }
       return payload;
     });
-
     onChange(docs);
   });
 };
@@ -102,6 +101,16 @@ export const listenForFoodItem = (
     });
 };
 
+export const setFoodItem = async (
+  foodId: string,
+  data: Omit<FoodItemDoc, "id">,
+) => {
+  return db
+    .collection("foodItems")
+    .doc(foodId)
+    .set(data);
+};
+
 export const addFoodItem = async (data: Omit<FoodItemDoc, "id">) => {
   return db.collection("foodItems").add(data);
 };
@@ -113,8 +122,8 @@ export const setMenuItems = async (menuId: string, items: MenuDoc["items"]) => {
     .set({ items }, { merge: true });
 };
 
-export const addMenu = (menu: Omit<MenuDoc, "id">) => {
-  const { date, ...rest } = menu;
+export const addMenu = (data: Omit<MenuDoc, "id">) => {
+  const { date, ...rest } = data;
   return db.collection("menus").add({
     date: dateToTimestamp(date),
     ...rest,

@@ -22,6 +22,7 @@ export const useMenuList = () => {
     history.push(date.toString());
   };
 
+  // if URL has no day param, navigate there
   useEffect(() => {
     if (!urlDate) {
       history.push(`${match.url}/${selectedDay.toString()}`);

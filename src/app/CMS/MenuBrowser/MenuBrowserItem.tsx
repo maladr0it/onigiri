@@ -13,18 +13,24 @@ const Item = styled.li`
 
 interface Props {
   id: string;
+  onEditClick: () => void;
+  onRemoveClick: () => void;
 }
 
-export const MenuBrowserItem: React.FC<Props> = ({ id }) => {
+export const MenuBrowserItem: React.FC<Props> = ({
+  id,
+  onEditClick,
+  onRemoveClick,
+}) => {
   const { isLoading, payload } = useFoodData(id);
 
-  return (
+  return !isLoading && payload ? (
     <Item>
-      {!isLoading && payload && <FoodItem {...payload} />}
+      <FoodItem {...payload} />
       <div>
-        <button>Edit Item</button>
-        <button>Remove</button>
+        <button onClick={onEditClick}>Edit Item</button>
+        <button onClick={onRemoveClick}>Remove</button>
       </div>
     </Item>
-  );
+  ) : null;
 };

@@ -6,10 +6,7 @@ import { EditMenuForm } from "./EditMenuForm";
 import { EditFoodForm } from "./EditFoodForm";
 
 export const CMS = () => {
-  // const { days, selectedDay, setSelectedDay, menu } = useWeekView();
   const match = useRouteMatch();
-
-  console.log(match.url);
 
   return (
     <Switch>

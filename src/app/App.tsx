@@ -18,8 +18,8 @@ export const App = () => {
     <Router>
       <Container>
         <nav>
-          <Link to="/">Menu</Link>
-          <Link to="/cms">CMS</Link>
+          <Link to="/public">Menu</Link>
+          <Link to="/cms/menus">CMS</Link>
         </nav>
         <Main>
           <Switch>

@@ -40,8 +40,6 @@ export const EditMenuForm: React.FC<Props> = () => {
 
   const { isLoading, payload } = useMenuData(date);
 
-  const isNewMenu = !isLoading && !payload;
-
   const exit = () => {
     history.push(`/cms/menus/${date}`);
   };
@@ -50,6 +48,7 @@ export const EditMenuForm: React.FC<Props> = () => {
     initialValues: {
       added: [],
     },
+
     onSubmit: async (values) => {
       if (payload) {
         await db.setMenuItems(payload.id, values.added);
@@ -61,6 +60,12 @@ export const EditMenuForm: React.FC<Props> = () => {
     },
   });
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    formik.handleSubmit();
+  };
+
+  // Set the form values if there is payload data
   // TODO: try to avoid updating state in response to state update
   useEffect(() => {
     if (payload) {
@@ -70,17 +75,12 @@ export const EditMenuForm: React.FC<Props> = () => {
     }
   }, [payload]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    formik.handleSubmit();
-  };
-
   return (
     <FormikProvider value={formik}>
       {!isLoading && (
         <Form onSubmit={handleSubmit}>
           <div>
-            <h1>{payload ? "Edit menu" : "Create menu"}</h1>
+            <h1>{payload ? "Edit menu" : "Create new menu"}</h1>
             <FoodList />
           </div>
           <Footer>

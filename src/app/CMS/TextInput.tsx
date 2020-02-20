@@ -13,7 +13,7 @@ export const TextInput: React.FC<Props> = ({ label, name }) => {
   return (
     <>
       <label htmlFor={name}>{label}</label>
-      <input id={name} type="text" {...field} />
+      <input id={name} type="text" autoComplete="off" {...field} />
       {meta.error && meta.touched && <div>{meta.error}</div>}
     </>
   );
