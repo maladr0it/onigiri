@@ -18,24 +18,28 @@ export interface FoodItemDoc {
 
 const db = firebase.firestore();
 
+// TODO: genericize the process of checking if data exists
+
 export const listenForMenuByDate = (
   date: number,
   onChange: (doc: MenuDoc | null) => void,
 ) => {
   const timestamp = dateToTimestamp(date);
 
-  console.log("listening for menu", date);
-
   return db
     .collection("menus")
     .where("date", "==", timestamp)
     .onSnapshot((querySnapshot) => {
-      const docs = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as MenuDoc[];
-      const doc = docs.length > 0 ? docs[0] : null;
-      onChange(doc);
+      const docs = querySnapshot.docs.map((doc) => {
+        const data = doc.data() as Omit<MenuDoc, "id">;
+        if (data) {
+          return { id: doc.id, ...data };
+        } else {
+          return null;
+        }
+      });
+
+      onChange(docs?.[0] ?? null);
     });
 };
 
@@ -46,38 +50,55 @@ export const listenForMenuById = (
   return db
     .collection("menus")
     .doc(id)
-    .onSnapshot((docSnapshot) => {
-      const doc = {
-        id: docSnapshot.id,
-        ...docSnapshot.data(),
-      } as MenuDoc;
-      onChange(doc);
+    .onSnapshot((doc) => {
+      const data = doc.data() as Omit<MenuDoc, "id">;
+      let payload: MenuDoc | null;
+      if (data) {
+        payload = { id: doc.id, ...data };
+      } else {
+        payload = null;
+      }
+
+      onChange(payload);
     });
 };
 
-export const listenForFoodList = (onChange: (docs: FoodItemDoc[]) => void) => {
+export const listenForFoodList = (
+  _: any,
+  onChange: (docs: (FoodItemDoc | null)[]) => void,
+) => {
   return db.collection("foodItems").onSnapshot((querySnapshot) => {
-    const docs = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as FoodItemDoc[];
+    const docs = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as Omit<FoodItemDoc, "id">;
+      let payload: FoodItemDoc | null;
+      if (data) {
+        payload = { id: doc.id, ...data };
+      } else {
+        payload = null;
+      }
+      return payload;
+    });
+
     onChange(docs);
   });
 };
 
 export const listenForFoodItem = (
   id: string,
-  onChange: (doc: FoodItemDoc) => void,
+  onChange: (doc: FoodItemDoc | null) => void,
 ) => {
   return db
     .collection("foodItems")
     .doc(id)
-    .onSnapshot((docSnapshot) => {
-      const doc = {
-        id,
-        ...docSnapshot.data(),
-      } as FoodItemDoc;
-      onChange(doc);
+    .onSnapshot((doc) => {
+      const data = doc.data() as Omit<FoodItemDoc, "id">;
+      let payload: FoodItemDoc | null;
+      if (data) {
+        payload = { id, ...data };
+      } else {
+        payload = null;
+      }
+      onChange(payload);
     });
 };
 

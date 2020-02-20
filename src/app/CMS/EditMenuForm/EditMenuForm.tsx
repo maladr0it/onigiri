@@ -61,18 +61,22 @@ export const EditMenuForm: React.FC<Props> = () => {
     formik.handleSubmit();
   };
 
+  console.log(payload);
+
   return (
     <FormikProvider value={formik}>
-      <Form onSubmit={handleSubmit}>
-        <div>
-          <h1>Editing menu {id}</h1>
-          <FoodList />
-        </div>
-        <Footer>
-          <MenuPreview />
-          <button type="submit">SUBMIT</button>
-        </Footer>
-      </Form>
+      {!isLoading && payload && (
+        <Form onSubmit={handleSubmit}>
+          <div>
+            <h1>Editing menu {id}</h1>
+            <FoodList />
+          </div>
+          <Footer>
+            <MenuPreview />
+            <button type="submit">SUBMIT</button>
+          </Footer>
+        </Form>
+      )}
     </FormikProvider>
   );
 };

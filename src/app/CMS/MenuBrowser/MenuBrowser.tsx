@@ -10,7 +10,7 @@ interface Props {
   days: number[];
   selectedDay: number;
   onDayClick: (day: number) => void;
-  menu: db.MenuDoc | null;
+  menu: { payload: db.MenuDoc | null; isLoading: boolean; isError: boolean };
 }
 
 export const MenuBrowser: React.FC<Props> = ({
@@ -23,8 +23,8 @@ export const MenuBrowser: React.FC<Props> = ({
   const match = useRouteMatch();
 
   const handleAddItemsClick = () => {
-    if (menu) {
-      history.push(`${match.url}/editmenu/${menu.id}`);
+    if (menu.payload) {
+      history.push(`${match.url}/editmenu/${menu.payload.id}`);
     }
   };
 
@@ -36,9 +36,9 @@ export const MenuBrowser: React.FC<Props> = ({
         selectedDay={selectedDay}
         onDayClick={onDayClick}
       />
-      {menu && (
+      {!menu.isLoading && menu.payload && (
         <ul>
-          {menu.items.map((id) => (
+          {menu.payload.items.map((id) => (
             <MenuBrowserItem key={id} id={id} />
           ))}
         </ul>

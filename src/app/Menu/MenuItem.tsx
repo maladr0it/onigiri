@@ -9,6 +9,6 @@ interface Props {
 }
 
 export const MenuItem: React.FC<Props> = ({ id }) => {
-  const { isLoading, payload } = useFoodData(id);
+  const { payload, isLoading } = useFoodData(id);
   return <li>{!isLoading && payload && <FoodItem {...payload} />}</li>;
 };

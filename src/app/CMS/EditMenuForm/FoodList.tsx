@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-import { db } from "../../services";
+import { useFoodList } from "../../useFoodList";
 import { FoodListItem } from "./FoodListItem";
 
-type FoodDoc = db.FoodItemDoc;
-
 export const FoodList = () => {
-  const [items, setItems] = useState<FoodDoc[]>();
-
-  useEffect(() => {
-    const unsubscribe = db.listenForFoodList((list) => {
-      setItems(list);
-    });
-    return unsubscribe;
-  }, []);
+  const { isLoading, payload } = useFoodList(null);
 
   return (
     <ul>
-      {items?.map((item) => (
-        <FoodListItem key={item.id} {...item} />
-      ))}
+      {!isLoading &&
+        payload &&
+        payload.map((item) => item && <FoodListItem key={item.id} {...item} />)}
     </ul>
   );
 };

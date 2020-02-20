@@ -23,6 +23,8 @@ const createSubscriptionReducer = <D>() => (
   state: State<D>,
   action: Action<D>,
 ): State<D> => {
+  console.log(state, action);
+
   switch (action.type) {
     case "subscription_changed": {
       return {
@@ -68,6 +70,7 @@ export function useSubscription<P, D>(
     };
     // set up new subscription;
     const unsubscribe = subscription(param, handleChange);
+    dispatch({ type: "subscription_changed" });
 
     return unsubscribe;
   }, [param]);

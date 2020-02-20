@@ -16,11 +16,11 @@ interface Props {
 }
 
 export const MenuBrowserItem: React.FC<Props> = ({ id }) => {
-  const { data } = useFoodData(id);
+  const { isLoading, payload } = useFoodData(id);
 
   return (
     <Item>
-      {data && <FoodItem id={id} data={data} />}
+      {!isLoading && payload && <FoodItem {...payload} />}
       <div>
         <button>Edit Item</button>
         <button>Remove</button>

@@ -21,6 +21,7 @@ export const Menu = () => {
           {menu.payload.items.map((id) => (
             <MenuItem key={id} id={id} />
           ))}
+          {selectedDay}
         </ul>
       )}
     </>
