@@ -4,10 +4,18 @@ import { useHistory } from "react-router-dom";
 
 import { useMenuList } from "../../useMenuList";
 import { WeekViewer } from "../../common/WeekViewer";
+import { MenuTitle } from "../../common/MenuTitle";
 import { MenuBrowserItem } from "./MenuBrowserItem";
 import { db } from "../../services";
 
 interface Props {}
+
+const Container = styled.div`
+  min-height: 100%;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+`;
 
 export const MenuBrowser: React.FC<Props> = () => {
   const history = useHistory();
@@ -25,39 +33,36 @@ export const MenuBrowser: React.FC<Props> = () => {
     }
   };
 
-  const handleItemEdit = (id: string) => {
-    history.push(`/cms/editfood/${id}`);
-  };
-
   return (
-    <>
-      <h1>WEEK_VIEWER</h1>
+    <Container>
       <WeekViewer
         days={days}
         selectedDay={selectedDay}
         onDayClick={changeDay}
       />
-      {!isLoading && payload && (
-        <>
-          <ul>
-            {payload.items.map((id) => (
-              <MenuBrowserItem
-                key={id}
-                id={id}
-                onEditClick={() => handleItemEdit(id)}
-                onRemoveClick={() => handleItemRemove(id)}
-              />
-            ))}
-          </ul>
-          <button onClick={handleEditMenuClick}>ADD MORE ITEMS</button>
-        </>
-      )}
-      {!isLoading && !payload && (
-        <>
-          <h2>THERE ARE NO ITEMS</h2>
-          <button onClick={handleEditMenuClick}>CREATE MENU</button>
-        </>
-      )}
-    </>
+      <div>
+        <MenuTitle day={selectedDay} />
+        {!isLoading && payload && payload.items.length > 0 && (
+          <>
+            <ul>
+              {payload.items.map((id) => (
+                <MenuBrowserItem
+                  key={id}
+                  id={id}
+                  onRemoveClick={() => handleItemRemove(id)}
+                />
+              ))}
+            </ul>
+            <button onClick={handleEditMenuClick}>ADD MORE ITEMS</button>
+          </>
+        )}
+        {!isLoading && (!payload || payload.items.length === 0) && (
+          <>
+            <p>There is no menu for today</p>
+            <button onClick={handleEditMenuClick}>CREATE MENU</button>
+          </>
+        )}
+      </div>
+    </Container>
   );
 };

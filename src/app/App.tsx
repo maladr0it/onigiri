@@ -7,8 +7,12 @@ import { CMS } from "./CMS";
 
 const Container = styled.div`
   height: 100%;
+  width: 100%;
+  max-width: 375px;
+  margin: auto;
   display: grid;
   grid-template-rows: auto 1fr;
+  background-color: #fff;
 `;
 
 const Main = styled.main``;

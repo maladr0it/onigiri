@@ -1,23 +1,13 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import { useFormik, FormikProvider, FormikErrors } from "formik";
 
 import { db, storage } from "../../services";
-import { TextInput } from "../TextInput";
-import { ImageUpload } from "./ImageUpload";
 import { useFoodData } from "../../useFoodData";
-
-const Form = styled.form``;
+import { FoodForm, FormValues } from "./FoodForm";
 
 interface RouteParams {
   id: string;
-}
-
-export interface FormValues {
-  name: string;
-  imageUrl?: string;
-  imageUpload: File | null;
 }
 
 export const EditFoodForm = () => {
@@ -47,23 +37,18 @@ export const EditFoodForm = () => {
     },
 
     onSubmit: async (values) => {
-      console.log("submitting...");
+      // Payload will always exist
+      if (!payload) return;
 
       const { imageUpload, imageUrl, ...rest } = values;
-
       let url = imageUrl;
       if (imageUpload) {
         url = await storage.uploadMenuItem(imageUpload);
       }
       const data = { imageUrl: url, ...rest };
 
-      if (payload) {
-        db.setFoodItem(id, data);
-        exit();
-      } else {
-        db.addFoodItem(data);
-        exit();
-      }
+      db.setFoodItem(id, data);
+      exit();
     },
   });
 
@@ -77,20 +62,15 @@ export const EditFoodForm = () => {
     }
   }, [payload]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    formik.handleSubmit();
-  };
-
   return (
     <FormikProvider value={formik}>
-      {!isLoading && (
-        <Form style={{ background: "red" }} onSubmit={handleSubmit}>
-          <h1>{payload ? "Edit food" : "Add new food"}</h1>
-          <TextInput label="Name" name="name" />
-          <ImageUpload imageUrl={formik.values.imageUrl} />
-          <button type="submit">Submit</button>
-        </Form>
+      {!isLoading && payload && (
+        <FoodForm
+          title="Edit food"
+          values={formik.values}
+          onSubmit={formik.handleSubmit}
+          onCancelClick={exit}
+        />
       )}
     </FormikProvider>
   );

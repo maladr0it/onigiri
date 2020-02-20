@@ -10,5 +10,11 @@ interface Props {
 
 export const MenuItem: React.FC<Props> = ({ id }) => {
   const { payload, isLoading } = useFoodData(id);
-  return <li>{!isLoading && payload && <FoodItem {...payload} />}</li>;
+  return (
+    <li>
+      {!isLoading && payload && (
+        <FoodItem {...payload} augment={payload.rating || "bad"} />
+      )}
+    </li>
+  );
 };

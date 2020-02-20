@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useField } from "formik";
 
-import { FormValues } from "./EditFoodForm";
+import { FormValues } from "./FoodForm";
 
 const PreviewContainer = styled.div`
   height: 10rem;

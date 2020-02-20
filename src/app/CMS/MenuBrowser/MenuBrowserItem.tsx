@@ -4,33 +4,34 @@ import styled from "styled-components";
 import { useFoodData } from "../../useFoodData";
 import { FoodItem } from "../../common/FoodItem";
 
-const Item = styled.li`
-  display: grid;
-  align-items: center;
-  grid-template-columns: 1fr auto;
-  grid-gap: 0.5rem;
+const RemoveButton = styled.button`
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+  font-size: 1rem;
+  border: none;
+  border-radius: 50%;
+  background-color: #ff3975;
+  color: #fff;
 `;
 
 interface Props {
   id: string;
-  onEditClick: () => void;
   onRemoveClick: () => void;
 }
 
-export const MenuBrowserItem: React.FC<Props> = ({
-  id,
-  onEditClick,
-  onRemoveClick,
-}) => {
+export const MenuBrowserItem: React.FC<Props> = ({ id, onRemoveClick }) => {
   const { isLoading, payload } = useFoodData(id);
 
-  return !isLoading && payload ? (
-    <Item>
-      <FoodItem {...payload} />
-      <div>
-        <button onClick={onEditClick}>Edit Item</button>
-        <button onClick={onRemoveClick}>Remove</button>
-      </div>
-    </Item>
-  ) : null;
+  if (!isLoading && payload) {
+    return (
+      <li>
+        <FoodItem
+          {...payload}
+          augment={<RemoveButton onClick={onRemoveClick}>X</RemoveButton>}
+        />
+      </li>
+    );
+  }
+  return null;
 };

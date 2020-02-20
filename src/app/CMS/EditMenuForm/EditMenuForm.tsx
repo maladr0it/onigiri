@@ -60,6 +60,10 @@ export const EditMenuForm: React.FC<Props> = () => {
     },
   });
 
+  const handleAddItemClick = () => {
+    history.push("/cms/addfood");
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     formik.handleSubmit();
@@ -81,6 +85,10 @@ export const EditMenuForm: React.FC<Props> = () => {
         <Form onSubmit={handleSubmit}>
           <div>
             <h1>{payload ? "Edit menu" : "Create new menu"}</h1>
+            {/* TODO: add new food should be a nested route so that form state is preserved */}
+            <button type="button" onClick={handleAddItemClick}>
+              Add new food item
+            </button>
             <FoodList />
           </div>
           <Footer>

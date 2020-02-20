@@ -1,7 +1,9 @@
 import React from "react";
+import styled from "styled-components";
 
 import { useMenuList } from "../useMenuList";
 import { WeekViewer } from "../common/WeekViewer";
+import { MenuTitle } from "../common/MenuTitle";
 import { MenuItem } from "./MenuItem";
 
 export const Menu = () => {
@@ -9,22 +11,20 @@ export const Menu = () => {
 
   return (
     <>
-      <h2>Menu Page</h2>
-      <hr />
       <WeekViewer
         days={days}
         selectedDay={selectedDay}
         onDayClick={changeDay}
       />
-      {!isLoading && payload && (
+      <MenuTitle day={selectedDay} />
+      {!isLoading && payload && payload.items.length > 0 && (
         <ul>
           {payload.items.map((id) => (
             <MenuItem key={id} id={id} />
           ))}
-          {selectedDay}
         </ul>
       )}
-      {!isLoading && !payload && (
+      {!isLoading && (!payload || payload.items.length === 0) && (
         <h3>There are no items added to the menu yet...</h3>
       )}
     </>
