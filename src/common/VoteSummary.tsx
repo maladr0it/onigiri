@@ -16,7 +16,7 @@ const ThumbsUpIcon = styled(ThumbsUp)`
 `;
 
 const Rating = styled.span`
-  font-weight: bold;
+  font-weight: 500;
   font-size: 1rem;
 `;
 
@@ -38,7 +38,7 @@ export const VoteSummary: React.FC<Props> = ({ upvotes, downvotes }) => {
       <span>
         <ThumbsUpIcon />
       </span>
-      <Rating>{ratingPerc}</Rating>
+      <Rating>{ratingPerc}%</Rating>
       <TotalVotes>({totalVotes})</TotalVotes>
     </Container>
   );
