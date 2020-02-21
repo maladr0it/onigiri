@@ -18,6 +18,7 @@ const Container = styled.div`
   position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  grid-gap: 0.25rem;
 `;
 
 const ActionButton = styled(PrimaryButton)`

@@ -7,7 +7,7 @@
     "develop": "webpack-dev-server --host 0.0.0.0",
     "build": "webpack --mode production",
     "build:extension-local": "node extension/build http://localhost:8080/#/public",
-    "build:extension-public": "node extension/build https://www.google.com",
+    "build:extension-public": "node extension/build https://nifty-sammet-10ea76.netlify.com/#/public",
     "deploy": "npm run build && now build/app"
   },
   "keywords": [],

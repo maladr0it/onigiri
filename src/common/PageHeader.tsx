@@ -9,6 +9,7 @@ const Header = styled.header`
   display: grid;
   grid-gap: 1rem;
   padding: 0.75rem;
+  z-index: 100;
   color: #fff;
   background: ${theme.red};
   position: sticky;

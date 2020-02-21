@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { db } from "../services";
 import { theme } from "../theme";
+import { NutritionTag } from "./NutritionTag";
 import { useFoodData } from "../useFoodData";
 
 const Item = styled.li`
@@ -31,6 +32,7 @@ const Content = styled.div`
 const ItemMiddle = styled.div`
   display: grid;
   grid-template-rows: 1fr auto;
+  grid-gap: 0.25rem;
 `;
 
 const Title = styled.div`
@@ -52,21 +54,18 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-const TagList = styled.ul`
+const FlexRow = styled.div<{ gap?: string }>`
   display: flex;
-  margin-top: 0.25rem;
 
   & > :not(:first-child) {
-    margin-left: 0.5rem;
+    margin-left: ${(props) => props.gap || 0};
   }
 `;
 
-const Tag = styled.li`
-  font-size: 0.75rem;
-  border-radius: 4px;
-  background-color: ${theme.lightGrey};
-  color: ${theme.textOnBg};
-  padding: 0.25rem;
+const CircleItem = styled.li`
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
 `;
 
 interface Props {
@@ -95,13 +94,20 @@ export const FoodItem: React.FC<Props> = ({ id, renderAugment, editable }) => {
         </ImageContainer>
         <ItemMiddle>
           <Title>{payload.name}</Title>
-          <div style={{ fontSize: "0.875rem" }}>
-            Rating: {payload.rating || "0"}%
-          </div>
-          <TagList>
-            <Tag>Gluten-free</Tag>
-            <Tag>Vegan</Tag>
-          </TagList>
+          <FlexRow gap="0.5rem">
+            <FlexRow gap="0.25rem">
+              <CircleItem style={{ backgroundColor: "#CEEC97" }} />
+              <CircleItem style={{ backgroundColor: "#FC60A8" }} />
+              <CircleItem style={{ backgroundColor: "#F4B393" }} />
+            </FlexRow>
+            <div style={{ fontSize: "0.875rem" }}>
+              Rating: {payload.rating || "0"}%
+            </div>
+          </FlexRow>
+          <FlexRow as="ul" gap="0.5rem">
+            <NutritionTag type="vegan" />
+            <NutritionTag type="gluten_free" />
+          </FlexRow>
         </ItemMiddle>
       </Content>
       {payload && renderAugment(payload)}

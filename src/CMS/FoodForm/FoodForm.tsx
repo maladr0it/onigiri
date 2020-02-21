@@ -12,21 +12,17 @@ const Form = styled.form`
   position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  grid-gap: 1rem;
+  grid-gap: 0.25rem;
 `;
 
 const SubmitButton = styled(PrimaryButton)`
   margin: 0.5rem 2rem;
 `;
 
-const FormContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-
-  & > *:not(:first-child) {
-    margin-top: 1rem;
-  }
+const Content = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-gap: 0.25rem;
 `;
 
 export interface FormValues {
@@ -56,7 +52,7 @@ export const FoodForm: React.FC<Props> = ({
   return (
     <Form onSubmit={handleSubmit}>
       <PageHeader title={title} backButton />
-      <FormContent>
+      <Content>
         <TextInput
           label="Name of food"
           name="name"
@@ -64,7 +60,7 @@ export const FoodForm: React.FC<Props> = ({
           required
         />
         <ImageUpload imageUrl={values.imageUrl} />
-      </FormContent>
+      </Content>
       <PageFooter>
         <SubmitButton type="submit">{submitLabel}</SubmitButton>
       </PageFooter>
