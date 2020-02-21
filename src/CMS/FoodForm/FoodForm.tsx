@@ -23,6 +23,7 @@ const Content = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
   grid-gap: 0.25rem;
+  padding: 0 0.25rem;
 `;
 
 export interface FormValues {
