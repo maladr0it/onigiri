@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
 
 import ThumbsUp from "../assets/thumbs-up.svg";
@@ -47,6 +47,12 @@ interface Props {
 export const VoteAugment: React.FC<Props> = ({ id }) => {
   const [vote, setVote] = useState<Vote | null>(null);
 
+  // use Layout so the ui is never visible in the abusable state
+  useLayoutEffect(() => {
+    const vote = (localStorage.getItem(id) || null) as Vote | null;
+    setVote(vote);
+  }, []);
+
   const handleVoteClick = async (value: Vote) => {
     const from = vote;
     let to: Vote | null;
@@ -57,6 +63,8 @@ export const VoteAugment: React.FC<Props> = ({ id }) => {
     }
 
     await db.vote(id, from, to);
+    // set local storage
+    localStorage.setItem(id, to || "");
     setVote(to);
   };
 

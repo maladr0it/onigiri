@@ -59,7 +59,7 @@ export const PageHeader: React.FC<Props> = ({
     <Header>
       <Strip>
         {backButton && (
-          <BackButton onClick={() => history.goBack()}>
+          <BackButton type="button" onClick={() => history.goBack()}>
             <LeftChevronIcon />
           </BackButton>
         )}

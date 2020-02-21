@@ -133,16 +133,12 @@ export const vote = async (
   from: "down" | "up" | null,
   to: "down" | "up" | null,
 ) => {
-  console.log(`setting from ${from} to ${to}`);
-
   const foodDocRef = db.collection("foodItems").doc(foodId);
 
   await db.runTransaction(async (transaction) => {
     const doc = (await (
       await transaction.get(foodDocRef)
     ).data()) as FoodItemDoc;
-
-    console.log(doc, "DOC DATA");
 
     let newUpvotes = doc.upvotes || 0;
     let newDownvotes = doc.downvotes || 0;

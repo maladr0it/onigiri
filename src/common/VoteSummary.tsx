@@ -31,7 +31,8 @@ interface Props {
 
 export const VoteSummary: React.FC<Props> = ({ upvotes, downvotes }) => {
   const totalVotes = upvotes + downvotes;
-  const ratingPerc = Math.round((upvotes / totalVotes) * 100);
+  const ratingPerc =
+    (totalVotes && Math.round((upvotes / totalVotes) * 100)) || 0;
 
   return (
     <Container gap="0.25rem">
