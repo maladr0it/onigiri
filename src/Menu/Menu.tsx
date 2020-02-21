@@ -33,7 +33,10 @@ export const Menu = () => {
         />
       </PageHeader>
       {!isLoading && payload && payload.items.length > 0 && (
-        <FoodList ids={payload.items} renderAugment={() => <VoteAugment />} />
+        <FoodList
+          ids={payload.items}
+          renderAugment={({ id }) => <VoteAugment id={id} />}
+        />
       )}
       {!isLoading && (!payload || payload.items.length === 0) && (
         <Message>There is no menu for this day</Message>

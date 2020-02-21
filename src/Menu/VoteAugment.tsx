@@ -2,26 +2,24 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import ThumbsUp from "../assets/thumbs-up.svg";
+import { db } from "../services";
 import { theme } from "../theme";
 
-type Vote = -1 | 0 | 1;
+type Vote = "up" | "down";
 
-const getBg = (vote: Vote) => {
-  switch (vote) {
-    case -1:
-      return theme.faintRed;
-    case 0:
-      return theme.lightGrey;
-    case 1:
-      return theme.faintGreen;
-  }
-};
-
-const Container = styled.div<{ vote: Vote }>`
+const Container = styled.div<{ vote: Vote | null }>`
   display: grid;
   grid-template-rows: 1fr 1fr;
   place-items: center;
-  background-color: ${(props) => getBg(props.vote)};
+  background-color: ${(props) => {
+    if (props.vote === "up") {
+      return theme.faintGreen;
+    }
+    if (props.vote === "down") {
+      return theme.faintRed;
+    }
+    return theme.lightGrey;
+  }};
 `;
 
 const IconButton = styled.button`
@@ -42,24 +40,33 @@ const ThumbsDownIcon = styled(ThumbsUp)<{ selected: boolean }>`
   transform: rotate(180deg);
 `;
 
-export const VoteAugment = () => {
-  const [vote, setVote] = useState<Vote>(0);
+interface Props {
+  id: string;
+}
 
-  const handleVoteClick = (value: Vote) => {
+export const VoteAugment: React.FC<Props> = ({ id }) => {
+  const [vote, setVote] = useState<Vote | null>(null);
+
+  const handleVoteClick = async (value: Vote) => {
+    const from = vote;
+    let to: Vote | null;
     if (vote === value) {
-      setVote(0);
+      to = null;
     } else {
-      setVote(value);
+      to = value;
     }
+
+    await db.vote(id, from, to);
+    setVote(to);
   };
 
   return (
     <Container vote={vote}>
-      <IconButton onClick={() => handleVoteClick(1)}>
-        <ThumbsUpIcon selected={vote === 1} />
+      <IconButton onClick={() => handleVoteClick("up")}>
+        <ThumbsUpIcon selected={vote === "up"} />
       </IconButton>
-      <IconButton onClick={() => handleVoteClick(-1)}>
-        <ThumbsDownIcon selected={vote === -1} />
+      <IconButton onClick={() => handleVoteClick("down")}>
+        <ThumbsDownIcon selected={vote === "down"} />
       </IconButton>
     </Container>
   );

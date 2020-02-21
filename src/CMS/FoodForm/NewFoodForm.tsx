@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { useRouteMatch, useHistory } from "react-router-dom";
+import React from "react";
+import { useHistory } from "react-router-dom";
 import { useFormik, FormikProvider, FormikErrors } from "formik";
 
 import { db, storage } from "../../services";
-import { useFoodData } from "../../useFoodData";
 
 import { FoodForm, FormValues } from "./FoodForm";
 

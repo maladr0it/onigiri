@@ -47,7 +47,7 @@ export const EditFoodForm = () => {
       }
       const data = { imageUrl: url, ...rest };
 
-      db.setFoodItem(id, data);
+      db.setFoodData(id, data);
       exit();
     },
   });

@@ -2,10 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
+import Pen from "../assets/pen-solid.svg";
 import { db } from "../services";
 import { theme } from "../theme";
+import { FlexRow } from "./FlexRow";
 import { NutritionTag } from "./NutritionTag";
 import { useFoodData } from "../useFoodData";
+import { VoteSummary } from "./VoteSummary";
 
 const Item = styled.li`
   position: relative;
@@ -20,6 +23,20 @@ const Item = styled.li`
 
 const EditButton = styled.button`
   position: absolute;
+  left: 0rem;
+  top: 0rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
+  margin: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.24);
+`;
+
+const PenIcon = styled(Pen)`
+  width: 100%;
 `;
 
 const Content = styled.div`
@@ -54,14 +71,6 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-const FlexRow = styled.div<{ gap?: string }>`
-  display: flex;
-
-  & > :not(:first-child) {
-    margin-left: ${(props) => props.gap || 0};
-  }
-`;
-
 const CircleItem = styled.li`
   width: 1rem;
   height: 1rem;
@@ -85,7 +94,7 @@ export const FoodItem: React.FC<Props> = ({ id, renderAugment, editable }) => {
           type="button"
           onClick={() => history.push(`/cms/editfood/${id}`)}
         >
-          EDIT
+          <PenIcon />
         </EditButton>
       )}
       <Content>
@@ -95,14 +104,15 @@ export const FoodItem: React.FC<Props> = ({ id, renderAugment, editable }) => {
         <ItemMiddle>
           <Title>{payload.name}</Title>
           <FlexRow gap="0.5rem">
-            <FlexRow gap="0.25rem">
+            <FlexRow as="ul" gap="0.25rem">
               <CircleItem style={{ backgroundColor: "#CEEC97" }} />
               <CircleItem style={{ backgroundColor: "#FC60A8" }} />
               <CircleItem style={{ backgroundColor: "#F4B393" }} />
             </FlexRow>
-            <div style={{ fontSize: "0.875rem" }}>
-              Rating: {payload.rating || "0"}%
-            </div>
+            <VoteSummary
+              upvotes={payload.upvotes}
+              downvotes={payload.downvotes}
+            />
           </FlexRow>
           <FlexRow as="ul" gap="0.5rem">
             <NutritionTag type="vegan" />

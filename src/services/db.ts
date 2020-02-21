@@ -12,8 +12,9 @@ export interface MenuDoc {
 export interface FoodItemDoc {
   id: string;
   name: string;
+  upvotes: number;
+  downvotes: number;
   imageUrl?: string;
-  rating?: number;
 }
 
 const db = firebase.firestore();
@@ -92,9 +93,9 @@ export const listenForFoodItem = (
     });
 };
 
-export const setFoodItem = async (
+export const setFoodData = async (
   foodId: string,
-  data: Omit<FoodItemDoc, "id">,
+  data: Omit<FoodItemDoc, "id" | "upvotes" | "downvotes">,
 ) => {
   return db
     .collection("foodItems")
@@ -102,8 +103,14 @@ export const setFoodItem = async (
     .set(data);
 };
 
-export const addFoodItem = async (data: Omit<FoodItemDoc, "id">) => {
-  return db.collection("foodItems").add(data);
+export const addFoodItem = async (
+  data: Omit<FoodItemDoc, "id" | "upvotes" | "downvotes">,
+) => {
+  return db.collection("foodItems").add({
+    ...data,
+    upvotes: 0,
+    downvotes: 0,
+  });
 };
 
 export const setMenuItems = async (menuId: string, items: MenuDoc["items"]) => {
@@ -118,5 +125,44 @@ export const addMenu = (data: Omit<MenuDoc, "id">) => {
   return db.collection("menus").add({
     date: dateToTimestamp(date),
     ...rest,
+  });
+};
+
+export const vote = async (
+  foodId: string,
+  from: "down" | "up" | null,
+  to: "down" | "up" | null,
+) => {
+  console.log(`setting from ${from} to ${to}`);
+
+  const foodDocRef = db.collection("foodItems").doc(foodId);
+
+  await db.runTransaction(async (transaction) => {
+    const doc = (await (
+      await transaction.get(foodDocRef)
+    ).data()) as FoodItemDoc;
+
+    console.log(doc, "DOC DATA");
+
+    let newUpvotes = doc.upvotes || 0;
+    let newDownvotes = doc.downvotes || 0;
+
+    if (to === "up") {
+      newUpvotes += 1;
+    }
+    if (to === "down") {
+      newDownvotes += 1;
+    }
+    if (from === "up") {
+      newUpvotes -= 1;
+    }
+    if (from === "down") {
+      newDownvotes -= 1;
+    }
+
+    transaction.update(foodDocRef, {
+      upvotes: newUpvotes,
+      downvotes: newDownvotes,
+    });
   });
 };

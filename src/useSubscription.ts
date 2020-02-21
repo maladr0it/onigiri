@@ -23,8 +23,6 @@ const createSubscriptionReducer = <D>() => (
   state: State<D>,
   action: Action<D>,
 ): State<D> => {
-  console.log(state, action);
-
   switch (action.type) {
     case "subscription_changed": {
       return {
