@@ -5,8 +5,8 @@ const ejs = require("ejs");
 const hostName = process.argv[2];
 
 const templateData = { hostName };
-const srcDir = path.resolve(__dirname, "src", "extension");
-const buildDir = path.resolve(__dirname, "build", "extension");
+const srcDir = path.resolve(__dirname);
+const buildDir = path.resolve(__dirname, "../dist_extension");
 
 async function makeTemplate(inputPath, templateData) {
   return new Promise((resolve, reject) => {
