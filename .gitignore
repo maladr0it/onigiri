@@ -2,5 +2,7 @@ node_modules
 dist
 dist_extension
 
+firebaseConfig.ts
+
 .DS_Store
 .now
