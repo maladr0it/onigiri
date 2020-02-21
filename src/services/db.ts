@@ -100,7 +100,7 @@ export const setFoodData = async (
   return db
     .collection("foodItems")
     .doc(foodId)
-    .set(data);
+    .set(data, { merge: true });
 };
 
 export const addFoodItem = async (
@@ -111,6 +111,15 @@ export const addFoodItem = async (
     upvotes: 0,
     downvotes: 0,
   });
+};
+
+export const deleteFooditem = async (foodId: string) => {
+  console.log("deleting,", foodId);
+
+  return db
+    .collection("foodItems")
+    .doc(foodId)
+    .delete();
 };
 
 export const setMenuItems = async (menuId: string, items: MenuDoc["items"]) => {

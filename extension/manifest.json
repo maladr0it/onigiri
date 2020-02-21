@@ -5,6 +5,11 @@
   "browser_action": {
     "default_popup": "popup.html"
   },
+  "icons": {
+    "16": "icon32.png",
+    "48": "icon32.png",
+    "128": "icon32.png"
+  },
   "background": {
     "page": "bg.html"
   }

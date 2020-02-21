@@ -21,6 +21,11 @@ export const EditFoodForm = () => {
     history.goBack();
   };
 
+  const handleDeleteClick = async () => {
+    await db.deleteFooditem(id);
+    exit();
+  };
+
   const formik = useFormik<FormValues>({
     initialValues: {
       name: "",
@@ -70,6 +75,7 @@ export const EditFoodForm = () => {
           submitLabel="Save changes"
           values={formik.values}
           onSubmit={formik.handleSubmit}
+          onDeleteClick={handleDeleteClick}
         />
       )}
     </FormikProvider>

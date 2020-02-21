@@ -6,6 +6,7 @@ import { PageFooter } from "../../common/PageFooter";
 import { TextInput } from "../../common/TextInput";
 import { PrimaryButton } from "../../common/PrimaryButton";
 import { ImageUpload } from "./ImageUpload";
+import { SecondaryButton } from "../../common/SecondaryButton";
 
 const Form = styled.form`
   min-height: 100%;
@@ -13,6 +14,10 @@ const Form = styled.form`
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-gap: 0.25rem;
+`;
+
+const DeleteButton = styled(SecondaryButton)`
+  margin: 0.5rem 2rem;
 `;
 
 const SubmitButton = styled(PrimaryButton)`
@@ -37,6 +42,7 @@ interface Props {
   submitLabel: string;
   values: FormValues;
   onSubmit: () => void;
+  onDeleteClick?: () => void;
 }
 
 export const FoodForm: React.FC<Props> = ({
@@ -44,6 +50,7 @@ export const FoodForm: React.FC<Props> = ({
   submitLabel,
   values,
   onSubmit,
+  onDeleteClick,
 }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -63,6 +70,11 @@ export const FoodForm: React.FC<Props> = ({
         <ImageUpload imageUrl={values.imageUrl} />
       </Content>
       <PageFooter>
+        {onDeleteClick && (
+          <DeleteButton type="button" onClick={onDeleteClick}>
+            Delete Item
+          </DeleteButton>
+        )}
         <SubmitButton type="submit">{submitLabel}</SubmitButton>
       </PageFooter>
     </Form>
