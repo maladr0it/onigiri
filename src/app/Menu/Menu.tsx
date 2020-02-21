@@ -5,7 +5,13 @@ import { getDayString } from "../utils";
 import { useMenuList } from "../useMenuList";
 import { WeekViewer } from "../common/WeekViewer";
 import { PageHeader } from "../common/PageHeader";
-import { MenuItem } from "./MenuItem";
+import { FoodList } from "../common/FoodList";
+import { VoteAugment } from "./VoteAugment";
+
+const Message = styled.div`
+  text-align: center;
+  margin-top: 2rem;
+`;
 
 export const Menu = () => {
   const { days, selectedDay, changeDay, isLoading, payload } = useMenuList();
@@ -20,14 +26,10 @@ export const Menu = () => {
         />
       </PageHeader>
       {!isLoading && payload && payload.items.length > 0 && (
-        <ul>
-          {payload.items.map((id) => (
-            <MenuItem key={id} id={id} />
-          ))}
-        </ul>
+        <FoodList ids={payload.items} renderAugment={() => <VoteAugment />} />
       )}
       {!isLoading && (!payload || payload.items.length === 0) && (
-        <h3>There are no items added to the menu yet...</h3>
+        <Message>There is no menu for this day</Message>
       )}
     </div>
   );

@@ -16,6 +16,7 @@ const DayList = styled.ul`
 const DayButton = styled.button<{ selected: boolean }>`
   position: relative;
   padding: 0;
+  margin: 0;
   background-color: transparent;
   border: none;
 `;

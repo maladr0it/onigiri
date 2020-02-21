@@ -2,18 +2,31 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
-import { useMenuList } from "../../useMenuList";
-import { WeekViewer } from "../../common/WeekViewer";
-import { MenuBrowserItem } from "./MenuBrowserItem";
+import { getDayString } from "../../utils";
 import { db } from "../../services";
+import { useMenuList } from "../../useMenuList";
+import { PageHeader } from "../../common/PageHeader";
+import { PageFooter } from "../../common/PageFooter";
+import { WeekViewer } from "../../common/WeekViewer";
+import { PrimaryButton } from "../../common/PrimaryButton";
+import { FoodList } from "../../common/FoodList";
+import { RemoveAugment } from "./RemoveAugment";
 
 interface Props {}
 
 const Container = styled.div`
-  min-height: 100%;
   position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
+`;
+
+const ActionButton = styled(PrimaryButton)`
+  margin: 0.5rem 2rem;
+`;
+
+const Message = styled.div`
+  text-align: center;
+  margin-top: 2rem;
 `;
 
 export const MenuBrowser: React.FC<Props> = () => {
@@ -34,33 +47,40 @@ export const MenuBrowser: React.FC<Props> = () => {
 
   return (
     <Container>
-      <WeekViewer
-        days={days}
-        selectedDay={selectedDay}
-        onDayClick={changeDay}
-      />
-      <div>
-        {!isLoading && payload && payload.items.length > 0 && (
-          <>
-            <ul>
-              {payload.items.map((id) => (
-                <MenuBrowserItem
-                  key={id}
-                  id={id}
-                  onRemoveClick={() => handleItemRemove(id)}
-                />
-              ))}
-            </ul>
-            <button onClick={handleEditMenuClick}>ADD MORE ITEMS</button>
-          </>
-        )}
-        {!isLoading && (!payload || payload.items.length === 0) && (
-          <>
-            <p>There is no menu for today</p>
-            <button onClick={handleEditMenuClick}>CREATE MENU</button>
-          </>
-        )}
-      </div>
+      <PageHeader title={`Edit ${getDayString(selectedDay)}'s Menu`}>
+        <WeekViewer
+          days={days}
+          selectedDay={selectedDay}
+          onDayClick={changeDay}
+        />
+      </PageHeader>
+
+      {!isLoading && payload && payload.items.length > 0 && (
+        <>
+          <FoodList
+            ids={payload.items}
+            renderAugment={(data) => (
+              <RemoveAugment onClick={() => handleItemRemove(data.id)} />
+            )}
+            editable
+          />
+          <PageFooter>
+            <ActionButton onClick={handleEditMenuClick}>
+              ADD MORE ITEMS
+            </ActionButton>
+          </PageFooter>
+        </>
+      )}
+      {!isLoading && (!payload || payload.items.length === 0) && (
+        <>
+          <Message>There is no menu for this day</Message>
+          <PageFooter>
+            <ActionButton onClick={handleEditMenuClick}>
+              CREATE MENU
+            </ActionButton>
+          </PageFooter>
+        </>
+      )}
     </Container>
   );
 };

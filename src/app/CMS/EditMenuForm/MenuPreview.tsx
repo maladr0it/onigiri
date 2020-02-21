@@ -5,20 +5,26 @@ import { useField } from "formik";
 import { FormValues } from "./EditMenuForm";
 import { MenuPreviewItem } from "./MenuPreviewItem";
 
+const Container = styled.div`
+  height: 4rem;
+  padding: 0 0.5rem;
+  background: #fff;
+  border-radius: 4px;
+`;
+
 const List = styled.ul`
   display: flex;
-  height: 4rem;
+  height: 100%;
   align-items: center;
   & > *:not(:first-child) {
-    margin-left: 0.25rem;
+    margin-left: 0.5rem;
   }
 `;
 
 const Placeholder = styled.div`
-  display: flex;
-  /* hard-code height */
-  height: 4rem;
-  align-items: center;
+  display: grid;
+  place-items: center;
+  height: 100%;
   text-align: center;
 `;
 
@@ -32,7 +38,7 @@ export const MenuPreview: React.FC = () => {
   };
 
   return (
-    <>
+    <Container>
       {foodItems.length > 0 ? (
         <List>
           {foodItems.map((id) => (
@@ -48,6 +54,6 @@ export const MenuPreview: React.FC = () => {
           Choose items from the list above for today's menu.
         </Placeholder>
       )}
-    </>
+    </Container>
   );
 };

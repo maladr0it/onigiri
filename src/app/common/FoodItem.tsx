@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 import { db } from "../services";
 import { theme } from "../theme";
+import { useFoodData } from "../useFoodData";
 
-const Item = styled.div`
+const Item = styled.li`
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 4rem;
   margin-bottom: 0.5rem;
@@ -12,6 +15,10 @@ const Item = styled.div`
   background: #fff;
   overflow: hidden;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.24);
+`;
+
+const EditButton = styled.button`
+  position: absolute;
 `;
 
 const Content = styled.div`
@@ -62,31 +69,42 @@ const Tag = styled.li`
   padding: 0.25rem;
 `;
 
-interface Props extends db.FoodItemDoc {
-  augment: React.ReactNode;
+interface Props {
+  id: string;
+  renderAugment: (data: db.FoodItemDoc) => React.ReactNode;
+  editable?: boolean;
 }
 
-export const FoodItem: React.FC<Props> = ({
-  id,
-  name,
-  imageUrl,
-  rating,
-  augment,
-}) => {
-  return (
+export const FoodItem: React.FC<Props> = ({ id, renderAugment, editable }) => {
+  const history = useHistory();
+  const { payload, isLoading } = useFoodData(id);
+
+  return !isLoading && payload ? (
     <Item>
+      {editable && (
+        <EditButton
+          type="button"
+          onClick={() => history.push(`/cms/editfood/${id}`)}
+        >
+          EDIT
+        </EditButton>
+      )}
       <Content>
-        <ImageContainer>{imageUrl && <Image src={imageUrl} />}</ImageContainer>
+        <ImageContainer>
+          {payload.imageUrl && <Image src={payload.imageUrl} />}
+        </ImageContainer>
         <ItemMiddle>
-          <Title>{name}</Title>
-          <div style={{ fontSize: "0.875rem" }}>Rating: {rating || "0"}%</div>
+          <Title>{payload.name}</Title>
+          <div style={{ fontSize: "0.875rem" }}>
+            Rating: {payload.rating || "0"}%
+          </div>
           <TagList>
             <Tag>Gluten-free</Tag>
             <Tag>Vegan</Tag>
           </TagList>
         </ItemMiddle>
       </Content>
-      {augment}
+      {payload && renderAugment(payload)}
     </Item>
-  );
+  ) : null;
 };

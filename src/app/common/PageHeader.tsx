@@ -7,7 +7,7 @@ import { theme } from "../theme";
 
 const Header = styled.header`
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: 1rem;
   padding: 0.75rem;
   color: #fff;
   background: ${theme.red};
@@ -34,6 +34,7 @@ const BackButton = styled.button`
   background-color: transparent;
   border: none;
   padding: 0;
+  margin: 0;
 `;
 
 const LeftChevronIcon = styled(LeftChevron)`

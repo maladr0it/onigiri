@@ -1,18 +1,19 @@
 import React from "react";
 
 import { useFoodList } from "../../useFoodList";
-import { FoodListItem } from "./FoodListItem";
+import { FoodList } from "../../common/FoodList";
+import { ToggleAugment } from "./ToggleAugment";
 
-export const FoodList: React.FC = () => {
+export const AllFoodList: React.FC = () => {
   const { isLoading, payload } = useFoodList(null);
 
   if (!isLoading && payload && payload.length > 0) {
     return (
-      <ul>
-        {payload.map(
-          (item) => item && <FoodListItem key={item.id} {...item} />,
-        )}
-      </ul>
+      <FoodList
+        ids={payload}
+        renderAugment={(data) => <ToggleAugment name="added" value={data.id} />}
+        editable
+      />
     );
   }
   if (!isLoading && payload && !payload.length) {

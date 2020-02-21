@@ -65,19 +65,10 @@ export const listenForMenuById = (
 
 export const listenForFoodList = (
   _: any,
-  onChange: (docs: (FoodItemDoc | null)[]) => void,
+  onChange: (ids: string[]) => void,
 ) => {
   return db.collection("foodItems").onSnapshot((querySnapshot) => {
-    const docs = querySnapshot.docs.map((doc) => {
-      const data = doc.data() as Omit<FoodItemDoc, "id">;
-      let payload: FoodItemDoc | null;
-      if (data) {
-        payload = { id: doc.id, ...data };
-      } else {
-        payload = null;
-      }
-      return payload;
-    });
+    const docs = querySnapshot.docs.map((doc) => doc.id);
     onChange(docs);
   });
 };

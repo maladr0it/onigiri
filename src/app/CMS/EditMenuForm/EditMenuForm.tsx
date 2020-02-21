@@ -5,37 +5,38 @@ import { useFormik, FormikProvider } from "formik";
 
 import { db } from "../../services";
 import { useMenuData } from "../../useMenuData";
+import { PageHeader } from "../../common/PageHeader";
+import { PageFooter } from "../../common/PageFooter";
 import { PrimaryButton } from "../../common/PrimaryButton";
+import { SecondaryButton } from "../../common/SecondaryButton";
 import { MenuPreview } from "./MenuPreview";
-import { FoodList } from "./FoodList";
+import { AllFoodList } from "./AllFoodList";
 
 const Form = styled.form`
-  min-height: 100%;
   position: relative;
   display: grid;
-  grid-template-rows: 1fr auto;
-  grid-gap: 0.5rem;
+  grid-template-rows: auto 1fr auto;
+  grid-gap: 0.25rem;
 `;
 
-const Footer = styled.div`
-  position: sticky;
-  bottom: 0;
-  background: #fff;
-  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.25);
+const Content = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-gap: 0.25rem;
 `;
 
-const Prompt = styled.div`
-  padding: 0.5rem 0;
-  text-align: center;
-  font-size: 1.2rem;
-  color: #fff;
-  background-color: #03ad00;
+const AddButton = styled(SecondaryButton)`
+  margin: 0 2rem;
 `;
 
 const Controls = styled.div`
   display: grid;
   grid-gap: 0.5rem;
   padding: 0.5rem;
+`;
+
+const ActionButton = styled(PrimaryButton)`
+  margin: 0 2rem;
 `;
 
 export interface FormValues {
@@ -98,28 +99,25 @@ export const EditMenuForm: React.FC<Props> = () => {
     <FormikProvider value={formik}>
       {!isLoading && (
         <Form onSubmit={handleSubmit}>
-          <div>
-            <h1>{payload ? "Edit menu" : "Create new menu"}</h1>
+          <PageHeader
+            title={payload ? "Edit menu" : "Create new menu"}
+            backButton
+          />
+          <Content>
             {/* TODO: add new food should be a nested route so that form state is preserved */}
-            <button type="button" onClick={handleAddItemClick}>
+            <AddButton type="button" onClick={handleAddItemClick}>
               Add new food item
-            </button>
-            <FoodList />
-          </div>
-          <Footer>
-            <Prompt>
-              <h1>Menu for XXX</h1>
-            </Prompt>
+            </AddButton>
+            <AllFoodList />
+          </Content>
+          <PageFooter>
             <Controls>
               <MenuPreview />
-              <PrimaryButton type="submit">
+              <ActionButton type="submit">
                 {payload ? "Update menu" : "Create Menu"}
-              </PrimaryButton>
-              <button type="button" onClick={exit}>
-                Cancel
-              </button>
+              </ActionButton>
             </Controls>
-          </Footer>
+          </PageFooter>
         </Form>
       )}
     </FormikProvider>

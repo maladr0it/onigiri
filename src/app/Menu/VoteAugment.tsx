@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import ThumbsUp from "../assets/thumbs-up-solid.svg";
+import ThumbsUp from "../assets/thumbs-up.svg";
 import { theme } from "../theme";
 
 type Vote = -1 | 0 | 1;
@@ -26,6 +26,8 @@ const Container = styled.div<{ vote: Vote }>`
 
 const IconButton = styled.button`
   border: none;
+  padding: 0;
+  margin: 0;
   background-color: transparent;
 `;
 
