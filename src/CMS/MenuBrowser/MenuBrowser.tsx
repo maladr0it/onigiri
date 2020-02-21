@@ -67,7 +67,7 @@ export const MenuBrowser: React.FC<Props> = () => {
           />
           <PageFooter>
             <ActionButton onClick={handleEditMenuClick}>
-              ADD MORE ITEMS
+              Add More Items
             </ActionButton>
           </PageFooter>
         </>
@@ -77,7 +77,7 @@ export const MenuBrowser: React.FC<Props> = () => {
           <Message>There is no menu for this day</Message>
           <PageFooter>
             <ActionButton onClick={handleEditMenuClick}>
-              CREATE MENU
+              Create Menu
             </ActionButton>
           </PageFooter>
         </>
