@@ -69,7 +69,7 @@ export const FoodForm: React.FC<Props> = ({
             placeholder="Enter food name"
             required
           />
-          <TagInput label="Tags" name="tags" />
+          {/* <TagInput label="Tags" name="tags" /> */}
           <ImageUpload imageUrl={values.imageUrl} />
         </Content>
         <PageFooter>
