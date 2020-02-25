@@ -14,7 +14,6 @@ const Item = styled.li`
   position: relative;
   display: grid;
   grid-template-columns: 1fr 4rem;
-  margin-bottom: 0.5rem;
   border-radius: 4px;
   background: #fff;
   overflow: hidden;

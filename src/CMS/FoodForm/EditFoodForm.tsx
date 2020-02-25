@@ -31,6 +31,7 @@ export const EditFoodForm = () => {
       name: "",
       imageUrl: "",
       imageUpload: null,
+      tags: [],
     },
 
     validate: (values) => {

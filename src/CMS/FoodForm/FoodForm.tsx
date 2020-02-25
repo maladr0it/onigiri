@@ -5,14 +5,14 @@ import { PageHeader } from "../../common/PageHeader";
 import { PageFooter } from "../../common/PageFooter";
 import { TextInput } from "../../common/TextInput";
 import { PrimaryButton } from "../../common/PrimaryButton";
-import { ImageUpload } from "./ImageUpload";
 import { SecondaryButton } from "../../common/SecondaryButton";
+import { TagInput } from "./TagInput";
+import { ImageUpload } from "./ImageUpload";
 
 const Form = styled.form`
-  min-height: 100%;
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr auto;
   grid-gap: 0.25rem;
 `;
 
@@ -26,7 +26,7 @@ const SubmitButton = styled(PrimaryButton)`
 
 const Content = styled.div`
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-gap: 0.25rem;
   padding: 0 0.25rem;
 `;
@@ -35,6 +35,7 @@ export interface FormValues {
   name: string;
   imageUrl?: string;
   imageUpload: File | null;
+  tags: [];
 }
 
 interface Props {
@@ -58,25 +59,28 @@ export const FoodForm: React.FC<Props> = ({
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <>
       <PageHeader title={title} backButton />
-      <Content>
-        <TextInput
-          label="Name of food"
-          name="name"
-          placeholder="Enter food name"
-          required
-        />
-        <ImageUpload imageUrl={values.imageUrl} />
-      </Content>
-      <PageFooter>
-        {onDeleteClick && (
-          <DeleteButton type="button" onClick={onDeleteClick}>
-            Delete Item
-          </DeleteButton>
-        )}
-        <SubmitButton type="submit">{submitLabel}</SubmitButton>
-      </PageFooter>
-    </Form>
+      <Form onSubmit={handleSubmit}>
+        <Content>
+          <TextInput
+            label="Name of food"
+            name="name"
+            placeholder="Enter food name"
+            required
+          />
+          <TagInput label="Tags" name="tags" />
+          <ImageUpload imageUrl={values.imageUrl} />
+        </Content>
+        <PageFooter>
+          {onDeleteClick && (
+            <DeleteButton type="button" onClick={onDeleteClick}>
+              Delete Item
+            </DeleteButton>
+          )}
+          <SubmitButton type="submit">{submitLabel}</SubmitButton>
+        </PageFooter>
+      </Form>
+    </>
   );
 };

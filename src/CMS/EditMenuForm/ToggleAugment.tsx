@@ -17,7 +17,7 @@ const Label = styled.label`
   display: inline-block;
   width: 2.5rem;
   height: 2.5rem;
-  background-color: #ededed;
+  background-color: ${theme.background};
   overflow: hidden;
   border-radius: 50%;
 `;

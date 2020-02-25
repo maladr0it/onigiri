@@ -11,7 +11,8 @@ const Main = styled.main`
   max-width: 375px;
   margin: auto;
   display: grid;
-  grid-template-rows: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-gap: 0.5rem;
 `;
 
 export const App = () => {

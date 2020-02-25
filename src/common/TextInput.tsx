@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useField } from "formik";
 
+import { theme } from "../theme";
+
 const Info = styled.div`
   display: flex;
   justify-content: space-between;
@@ -22,7 +24,7 @@ const Input = styled.input<{ hasError: boolean }>`
   display: block;
   width: 100%;
   font-size: 1rem;
-  border: 2px solid ${(props) => (props.hasError ? "#ed262a" : "#c4c4c4")};
+  border: 2px solid ${(props) => (props.hasError ? theme.red : theme.lightGrey)};
   border-radius: 2px;
   padding: 0.5rem;
 

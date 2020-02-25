@@ -15,14 +15,15 @@ import { AllFoodList } from "./AllFoodList";
 const Form = styled.form`
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  grid-gap: 0.25rem;
+  grid-template-rows: 1fr auto;
+  min-height: 100%;
+  grid-gap: 0.5rem;
 `;
 
 const Content = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-gap: 0.25rem;
+  grid-gap: 0.5rem;
 `;
 
 const AddButton = styled(SecondaryButton)`
@@ -97,12 +98,12 @@ export const EditMenuForm: React.FC<Props> = () => {
 
   return (
     <FormikProvider value={formik}>
+      <PageHeader
+        title={payload ? "Edit menu" : "Create new menu"}
+        backButton
+      />
       {!isLoading && (
         <Form onSubmit={handleSubmit}>
-          <PageHeader
-            title={payload ? "Edit menu" : "Create new menu"}
-            backButton
-          />
           <Content>
             {/* TODO: add new food should be a nested route so that form state is preserved */}
             <AddButton type="button" onClick={handleAddItemClick}>

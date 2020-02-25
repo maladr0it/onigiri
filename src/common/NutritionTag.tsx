@@ -11,20 +11,21 @@ const Tag = styled.li`
 
 interface Props {
   type: ITag;
+  className?: string;
 }
 
-export const NutritionTag: React.FC<Props> = ({ type }) => {
+export const NutritionTag: React.FC<Props> = ({ type, ...rest }) => {
   switch (type) {
     case "vegan":
       return (
-        <Tag style={{ backgroundColor: "#9CE8CD", color: "#00825F" }}>
+        <Tag style={{ backgroundColor: "#9CE8CD", color: "#00825F" }} {...rest}>
           Vegan
         </Tag>
       );
 
     case "gluten_free":
       return (
-        <Tag style={{ backgroundColor: "#FFF39A", color: "#C2A70B" }}>
+        <Tag style={{ backgroundColor: "#FFF39A", color: "#C2A70B" }} {...rest}>
           Gluten Free
         </Tag>
       );

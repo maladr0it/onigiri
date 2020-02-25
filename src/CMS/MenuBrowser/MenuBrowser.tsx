@@ -14,11 +14,10 @@ import { RemoveAugment } from "./RemoveAugment";
 
 interface Props {}
 
-const Container = styled.div`
-  position: relative;
+const Content = styled.div`
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  grid-gap: 0.25rem;
+  grid-template-rows: 1fr auto;
+  grid-gap: 0.5rem;
 `;
 
 const ActionButton = styled(PrimaryButton)`
@@ -47,7 +46,7 @@ export const MenuBrowser: React.FC<Props> = () => {
   };
 
   return (
-    <Container>
+    <>
       <PageHeader title={`Edit ${getDayString(selectedDay)}'s Menu`}>
         <WeekViewer
           days={days}
@@ -55,33 +54,34 @@ export const MenuBrowser: React.FC<Props> = () => {
           onDayClick={changeDay}
         />
       </PageHeader>
-
-      {!isLoading && payload && payload.items.length > 0 && (
-        <>
-          <FoodList
-            ids={payload.items}
-            renderAugment={(data) => (
-              <RemoveAugment onClick={() => handleItemRemove(data.id)} />
-            )}
-            editable
-          />
-          <PageFooter>
-            <ActionButton onClick={handleEditMenuClick}>
-              Add More Items
-            </ActionButton>
-          </PageFooter>
-        </>
-      )}
-      {!isLoading && (!payload || payload.items.length === 0) && (
-        <>
-          <Message>There is no menu for this day</Message>
-          <PageFooter>
-            <ActionButton onClick={handleEditMenuClick}>
-              Create Menu
-            </ActionButton>
-          </PageFooter>
-        </>
-      )}
-    </Container>
+      <Content>
+        {!isLoading && payload && payload.items.length > 0 && (
+          <>
+            <FoodList
+              ids={payload.items}
+              renderAugment={(data) => (
+                <RemoveAugment onClick={() => handleItemRemove(data.id)} />
+              )}
+              editable
+            />
+            <PageFooter>
+              <ActionButton onClick={handleEditMenuClick}>
+                Add More Items
+              </ActionButton>
+            </PageFooter>
+          </>
+        )}
+        {!isLoading && (!payload || payload.items.length === 0) && (
+          <>
+            <Message>There is no menu for this day</Message>
+            <PageFooter>
+              <ActionButton onClick={handleEditMenuClick}>
+                Create Menu
+              </ActionButton>
+            </PageFooter>
+          </>
+        )}
+      </Content>
+    </>
   );
 };
